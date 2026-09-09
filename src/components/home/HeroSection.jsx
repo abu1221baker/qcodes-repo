@@ -1,8 +1,250 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
+const NOTIFICATION_LINES = [
+  {
+    indent: 'pl-0',
+    tokens: [
+      { text: 'import ', color: 'text-[#c084fc]' },
+      { text: '{ ', color: 'text-[#f8fafc]' },
+      { text: 'useState ', color: 'text-[#38bdf8]' },
+      { text: '} ', color: 'text-[#f8fafc]' },
+      { text: 'from ', color: 'text-[#c084fc]' },
+      { text: "'react'", color: 'text-[#34d399]' },
+    ],
+  },
+  {
+    indent: 'pl-0',
+    tokens: [
+      { text: 'import ', color: 'text-[#c084fc]' },
+      { text: '{ ', color: 'text-[#f8fafc]' },
+      { text: 'Switch ', color: 'text-[#38bdf8]' },
+      { text: '} ', color: 'text-[#f8fafc]' },
+      { text: 'from ', color: 'text-[#c084fc]' },
+      { text: "'@headlessui/react'", color: 'text-[#34d399]' },
+    ],
+  },
+  {
+    indent: 'pl-0',
+    spacer: true,
+  },
+  {
+    indent: 'pl-0',
+    tokens: [
+      { text: 'function ', color: 'text-[#60a5fa]' },
+      { text: 'Example', color: 'text-[#fcd34d]' },
+      { text: '() {', color: 'text-[#f8fafc]' },
+    ],
+  },
+  {
+    indent: 'pl-4',
+    tokens: [
+      { text: 'const ', color: 'text-[#c084fc]' },
+      { text: '[enabled, setEnabled] = ', color: 'text-[#f8fafc]' },
+      { text: 'useState', color: 'text-[#38bdf8]' },
+      { text: '(', color: 'text-[#f8fafc]' },
+      { text: 'true', color: 'text-[#f472b6]' },
+      { text: ')', color: 'text-[#f8fafc]' },
+    ],
+  },
+  {
+    indent: 'pl-0',
+    spacer: true,
+  },
+  {
+    indent: 'pl-4',
+    tokens: [
+      { text: 'return ', color: 'text-[#c084fc]' },
+      { text: '(', color: 'text-[#f8fafc]' },
+    ],
+  },
+  {
+    indent: 'pl-8',
+    tokens: [
+      { text: '<', color: 'text-[#f8fafc]' },
+      { text: 'form ', color: 'text-[#60a5fa]' },
+      { text: 'action', color: 'text-[#38bdf8]' },
+      { text: '=', color: 'text-[#f8fafc]' },
+      { text: '"/notification-settings" ', color: 'text-[#34d399]' },
+      { text: 'method', color: 'text-[#38bdf8]' },
+      { text: '=', color: 'text-[#f8fafc]' },
+      { text: '"post"', color: 'text-[#34d399]' },
+      { text: '>', color: 'text-[#f8fafc]' },
+    ],
+  },
+  {
+    indent: 'pl-12',
+    tokens: [
+      { text: '<', color: 'text-[#f8fafc]' },
+      { text: 'Switch ', color: 'text-[#60a5fa]' },
+      { text: 'checked', color: 'text-[#38bdf8]' },
+      { text: '={', color: 'text-[#f8fafc]' },
+      { text: 'enabled', color: 'text-[#f8fafc]' },
+      { text: '} ', color: 'text-[#f8fafc]' },
+      { text: 'onChange', color: 'text-[#38bdf8]' },
+      { text: '={', color: 'text-[#f8fafc]' },
+      { text: 'setEnabled', color: 'text-[#f8fafc]' },
+      { text: '} ', color: 'text-[#f8fafc]' },
+      { text: 'name', color: 'text-[#38bdf8]' },
+      { text: '=', color: 'text-[#f8fafc]' },
+      { text: '"not', color: 'text-[#34d399]' },
+    ],
+  },
+  {
+    indent: 'pl-16',
+    tokens: [
+      { text: '{/* ... */}', color: 'text-slate-500 italic' },
+    ],
+  },
+  {
+    indent: 'pl-12',
+    tokens: [
+      { text: '</', color: 'text-[#f8fafc]' },
+      { text: 'Switch', color: 'text-[#60a5fa]' },
+      { text: '>', color: 'text-[#f8fafc]' },
+    ],
+  },
+  {
+    indent: 'pl-12',
+    tokens: [
+      { text: '<', color: 'text-[#f8fafc]' },
+      { text: 'button', color: 'text-[#60a5fa]' },
+      { text: '>', color: 'text-[#f8fafc]' },
+      { text: 'Submit', color: 'text-white font-medium' },
+      { text: '</', color: 'text-[#f8fafc]' },
+      { text: 'button', color: 'text-[#60a5fa]' },
+      { text: '>', color: 'text-[#f8fafc]' },
+    ],
+  },
+  {
+    indent: 'pl-8',
+    tokens: [
+      { text: '</', color: 'text-[#f8fafc]' },
+      { text: 'form', color: 'text-[#60a5fa]' },
+      { text: '>', color: 'text-[#f8fafc]' },
+    ],
+  },
+  {
+    indent: 'pl-4',
+    tokens: [
+      { text: ')', color: 'text-[#f8fafc]' },
+    ],
+  },
+  {
+    indent: 'pl-0',
+    tokens: [
+      { text: '}', color: 'text-[#f8fafc]' },
+    ],
+  },
+];
+
+const APP_LINES = [
+  {
+    indent: 'pl-0',
+    tokens: [
+      { text: 'import ', color: 'text-[#c084fc]' },
+      { text: '{ ', color: 'text-[#f8fafc]' },
+      { text: 'NotificationSetting ', color: 'text-[#38bdf8]' },
+      { text: '} ', color: 'text-[#f8fafc]' },
+      { text: 'from ', color: 'text-[#c084fc]' },
+      { text: "'./NotificationSetting'", color: 'text-[#34d399]' },
+    ],
+  },
+  {
+    indent: 'pl-0',
+    spacer: true,
+  },
+  {
+    indent: 'pl-0',
+    tokens: [
+      { text: 'export default ', color: 'text-[#c084fc]' },
+      { text: 'function ', color: 'text-[#60a5fa]' },
+      { text: 'App', color: 'text-[#fcd34d]' },
+      { text: '() {', color: 'text-[#f8fafc]' },
+    ],
+  },
+  {
+    indent: 'pl-4',
+    tokens: [
+      { text: 'return ', color: 'text-[#c084fc]' },
+      { text: '(', color: 'text-[#f8fafc]' },
+    ],
+  },
+  {
+    indent: 'pl-8',
+    tokens: [
+      { text: '<', color: 'text-[#f8fafc]' },
+      { text: 'main ', color: 'text-[#60a5fa]' },
+      { text: 'className', color: 'text-[#38bdf8]' },
+      { text: '=', color: 'text-[#f8fafc]' },
+      { text: '"min-h-screen bg-slate-900 text-white p-8"', color: 'text-[#34d399]' },
+      { text: '>', color: 'text-[#f8fafc]' },
+    ],
+  },
+  {
+    indent: 'pl-12',
+    tokens: [
+      { text: '<', color: 'text-[#f8fafc]' },
+      { text: 'NotificationSetting ', color: 'text-[#60a5fa]' },
+      { text: '/>', color: 'text-[#f8fafc]' },
+    ],
+  },
+  {
+    indent: 'pl-8',
+    tokens: [
+      { text: '</', color: 'text-[#f8fafc]' },
+      { text: 'main', color: 'text-[#60a5fa]' },
+      { text: '>', color: 'text-[#f8fafc]' },
+    ],
+  },
+  {
+    indent: 'pl-4',
+    tokens: [
+      { text: ')', color: 'text-[#f8fafc]' },
+    ],
+  },
+  {
+    indent: 'pl-0',
+    tokens: [
+      { text: '}', color: 'text-[#f8fafc]' },
+    ],
+  },
+];
+
+const getTotalLength = (lines) => {
+  return lines.reduce((total, line) => {
+    if (line.spacer) return total + 1;
+    return total + (line.tokens ? line.tokens.reduce((acc, t) => acc + t.text.length, 0) : 0);
+  }, 0);
+};
 
 export default function HeroSection() {
   const [activeTab, setActiveTab] = useState('NotificationSetting.jsx');
   const [copied, setCopied] = useState(false);
+  const [isDoneTyping, setIsDoneTyping] = useState(false);
+  const [charIndex, setCharIndex] = useState(0);
+
+  const initialTotalChars = getTotalLength(NOTIFICATION_LINES);
+
+  // Single-run typing animation on initial page load / browser reload only
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCharIndex((prev) => {
+        if (prev < initialTotalChars) {
+          return prev + 1;
+        } else {
+          clearInterval(intervalId);
+          setIsDoneTyping(true);
+          return prev;
+        }
+      });
+    }, 10);
+
+    return () => clearInterval(intervalId);
+  }, [initialTotalChars]);
+
+  const currentLines = activeTab === 'NotificationSetting.jsx' ? NOTIFICATION_LINES : APP_LINES;
+  const currentTotal = getTotalLength(currentLines);
+  const effectiveCharCount = isDoneTyping || activeTab !== 'NotificationSetting.jsx' ? currentTotal : charIndex;
 
   const notificationCode = `import { useState } from 'react'
 import { Switch } from '@headlessui/react'
@@ -42,6 +284,82 @@ export default function App() {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  // Render tokens character by character according to effectiveCharCount
+  let remaining = effectiveCharCount;
+  let cursorPlaced = false;
+
+  const renderedLines = currentLines.map((line, lineIdx) => {
+    if (line.spacer) {
+      if (remaining <= 0 && cursorPlaced) return null;
+      if (remaining > 0) remaining -= 1;
+      return <div key={lineIdx} className="h-4" />;
+    }
+
+    const tokenElements = [];
+    for (let tIdx = 0; tIdx < line.tokens.length; tIdx++) {
+      const token = line.tokens[tIdx];
+      const len = token.text.length;
+
+      if (remaining <= 0) {
+        if (!cursorPlaced) {
+          tokenElements.push(
+            <span
+              key="cursor"
+              className="inline-block w-[2px] h-[1.15em] bg-[#FF4D79] ml-[1px] align-middle animate-pulse shadow-[0_0_8px_#FF4D79]"
+            />
+          );
+          cursorPlaced = true;
+        }
+        break;
+      }
+
+      if (remaining >= len) {
+        tokenElements.push(
+          <span key={tIdx} className={token.color}>
+            {token.text}
+          </span>
+        );
+        remaining -= len;
+      } else {
+        const slice = token.text.slice(0, remaining);
+        tokenElements.push(
+          <span key={tIdx} className={token.color}>
+            {slice}
+          </span>
+        );
+        tokenElements.push(
+          <span
+            key="cursor"
+            className="inline-block w-[2px] h-[1.15em] bg-[#FF4D79] ml-[1px] align-middle animate-pulse shadow-[0_0_8px_#FF4D79]"
+          />
+        );
+        cursorPlaced = true;
+        remaining = 0;
+        break;
+      }
+    }
+
+    if (remaining === 0 && !cursorPlaced && tokenElements.length > 0) {
+      tokenElements.push(
+        <span
+          key="cursor"
+          className="inline-block w-[2px] h-[1.15em] bg-[#FF4D79] ml-[1px] align-middle animate-pulse shadow-[0_0_8px_#FF4D79]"
+        />
+      );
+      cursorPlaced = true;
+    }
+
+    if (tokenElements.length === 0 && cursorPlaced) {
+      return null;
+    }
+
+    return (
+      <div key={lineIdx} className={line.indent}>
+        {tokenElements}
+      </div>
+    );
+  });
+
   return (
     <section className="relative w-full overflow-hidden bg-[#F8F9FA] text-text-main border-b border-border-subtle">
       {/* Ambient Qcodes Energy Backlights */}
@@ -62,8 +380,8 @@ export default function App() {
             </h1>
 
             {/* Description Paragraph */}
-            <p className="font-sans text-base sm:text-lg text-text-muted leading-relaxed max-w-lg">
-              We offer web &amp; mobile web development, digital marketing, blockchain, IoT &amp; UI&amp;UX design,we provide process-driven digital solutions for clients in the global marketplace.
+            <p className="font-sans text-lg sm:text-xl lg:text-[21px] text-text-muted leading-relaxed max-w-xl">
+              We offer web &amp; mobile web development, digital marketing, blockchain, IoT &amp; UI/UX design, we provide process-driven digital solutions for clients in the global marketplace.
             </p>
 
             {/* Action Buttons */}
@@ -132,145 +450,11 @@ export default function App() {
                   </button>
                 </div>
 
-                {/* Code Body with High-Fidelity Syntax Highlighting */}
-                <div className="p-4 sm:p-6 xl:p-7 text-[13px] sm:text-[14px] leading-relaxed overflow-x-auto select-text text-slate-300">
-                  {activeTab === 'NotificationSetting.jsx' ? (
-                    <div className="space-y-1 font-mono">
-                      <div>
-                        <span className="text-[#c084fc]">import </span>
-                        <span className="text-[#f8fafc]">&#123; </span>
-                        <span className="text-[#38bdf8]">useState </span>
-                        <span className="text-[#f8fafc]">&#125; </span>
-                        <span className="text-[#c084fc]">from </span>
-                        <span className="text-[#34d399]">'react'</span>
-                      </div>
-                      <div>
-                        <span className="text-[#c084fc]">import </span>
-                        <span className="text-[#f8fafc]">&#123; </span>
-                        <span className="text-[#38bdf8]">Switch </span>
-                        <span className="text-[#f8fafc]">&#125; </span>
-                        <span className="text-[#c084fc]">from </span>
-                        <span className="text-[#34d399]">'@headlessui/react'</span>
-                      </div>
-                      <div className="h-4" />
-                      <div>
-                        <span className="text-[#60a5fa]">function </span>
-                        <span className="text-[#fcd34d]">Example</span>
-                        <span className="text-[#f8fafc]">() &#123;</span>
-                      </div>
-                      <div className="pl-4">
-                        <span className="text-[#c084fc]">const </span>
-                        <span className="text-[#f8fafc]">[enabled, setEnabled] = </span>
-                        <span className="text-[#38bdf8]">useState</span>
-                        <span className="text-[#f8fafc]">(</span>
-                        <span className="text-[#f472b6]">true</span>
-                        <span className="text-[#f8fafc]">)</span>
-                      </div>
-                      <div className="h-4" />
-                      <div className="pl-4">
-                        <span className="text-[#c084fc]">return </span>
-                        <span className="text-[#f8fafc]">(</span>
-                      </div>
-                      <div className="pl-8">
-                        <span className="text-[#f8fafc]">&lt;</span>
-                        <span className="text-[#60a5fa]">form </span>
-                        <span className="text-[#38bdf8]">action</span>
-                        <span className="text-[#f8fafc]">=</span>
-                        <span className="text-[#34d399]">"/notification-settings" </span>
-                        <span className="text-[#38bdf8]">method</span>
-                        <span className="text-[#f8fafc]">=</span>
-                        <span className="text-[#34d399]">"post"</span>
-                        <span className="text-[#f8fafc]">&gt;</span>
-                      </div>
-                      <div className="pl-12">
-                        <span className="text-[#f8fafc]">&lt;</span>
-                        <span className="text-[#60a5fa]">Switch </span>
-                        <span className="text-[#38bdf8]">checked</span>
-                        <span className="text-[#f8fafc]">=&#123;</span>
-                        <span className="text-[#f8fafc]">enabled</span>
-                        <span className="text-[#f8fafc]">&#125; </span>
-                        <span className="text-[#38bdf8]">onChange</span>
-                        <span className="text-[#f8fafc]">=&#123;</span>
-                        <span className="text-[#f8fafc]">setEnabled</span>
-                        <span className="text-[#f8fafc]">&#125; </span>
-                        <span className="text-[#38bdf8]">name</span>
-                        <span className="text-[#f8fafc]">=</span>
-                        <span className="text-[#34d399]">"not</span>
-                      </div>
-                      <div className="pl-16 text-slate-500 italic">&#123;/* ... */&#125;</div>
-                      <div className="pl-12">
-                        <span className="text-[#f8fafc]">&lt;/</span>
-                        <span className="text-[#60a5fa]">Switch</span>
-                        <span className="text-[#f8fafc]">&gt;</span>
-                      </div>
-                      <div className="pl-12">
-                        <span className="text-[#f8fafc]">&lt;</span>
-                        <span className="text-[#60a5fa]">button</span>
-                        <span className="text-[#f8fafc]">&gt;</span>
-                        <span className="text-white font-medium">Submit</span>
-                        <span className="text-[#f8fafc]">&lt;/</span>
-                        <span className="text-[#60a5fa]">button</span>
-                        <span className="text-[#f8fafc]">&gt;</span>
-                      </div>
-                      <div className="pl-8">
-                        <span className="text-[#f8fafc]">&lt;/</span>
-                        <span className="text-[#60a5fa]">form</span>
-                        <span className="text-[#f8fafc]">&gt;</span>
-                      </div>
-                      <div className="pl-4">
-                        <span className="text-[#f8fafc]">)</span>
-                      </div>
-                      <div>
-                        <span className="text-[#f8fafc]">&#125;</span>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="space-y-1 font-mono">
-                      <div>
-                        <span className="text-[#c084fc]">import </span>
-                        <span className="text-[#f8fafc]">&#123; </span>
-                        <span className="text-[#38bdf8]">NotificationSetting </span>
-                        <span className="text-[#f8fafc]">&#125; </span>
-                        <span className="text-[#c084fc]">from </span>
-                        <span className="text-[#34d399]">'./NotificationSetting'</span>
-                      </div>
-                      <div className="h-4" />
-                      <div>
-                        <span className="text-[#c084fc]">export default </span>
-                        <span className="text-[#60a5fa]">function </span>
-                        <span className="text-[#fcd34d]">App</span>
-                        <span className="text-[#f8fafc]">() &#123;</span>
-                      </div>
-                      <div className="pl-4">
-                        <span className="text-[#c084fc]">return </span>
-                        <span className="text-[#f8fafc]">(</span>
-                      </div>
-                      <div className="pl-8">
-                        <span className="text-[#f8fafc]">&lt;</span>
-                        <span className="text-[#60a5fa]">main </span>
-                        <span className="text-[#38bdf8]">className</span>
-                        <span className="text-[#f8fafc]">=</span>
-                        <span className="text-[#34d399]">"min-h-screen bg-slate-900 text-white p-8"</span>
-                        <span className="text-[#f8fafc]">&gt;</span>
-                      </div>
-                      <div className="pl-12">
-                        <span className="text-[#f8fafc]">&lt;</span>
-                        <span className="text-[#60a5fa]">NotificationSetting </span>
-                        <span className="text-[#f8fafc]">/&gt;</span>
-                      </div>
-                      <div className="pl-8">
-                        <span className="text-[#f8fafc]">&lt;/</span>
-                        <span className="text-[#60a5fa]">main</span>
-                        <span className="text-[#f8fafc]">&gt;</span>
-                      </div>
-                      <div className="pl-4">
-                        <span className="text-[#f8fafc]">)</span>
-                      </div>
-                      <div>
-                        <span className="text-[#f8fafc]">&#125;</span>
-                      </div>
-                    </div>
-                  )}
+                {/* Code Body with High-Fidelity Syntax Highlighting & Typing Animation */}
+                <div className="p-4 sm:p-6 xl:p-7 text-[13px] sm:text-[14px] leading-relaxed overflow-x-auto select-text text-slate-300 min-h-[380px] sm:min-h-[440px]">
+                  <div className="space-y-1 font-mono">
+                    {renderedLines}
+                  </div>
                 </div>
               </div>
             </div>

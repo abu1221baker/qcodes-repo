@@ -149,10 +149,14 @@ export default function SolutionsCloudSection() {
 
     const trackRect = track.getBoundingClientRect();
     const points = [];
+    const isMobile = window.innerWidth < 1024;
 
     // Start point slightly above the first milestone
-    const startX = (trackRect.width / 2);
-    const startY = 10;
+    const firstAnchorRect = anchors[0].getBoundingClientRect();
+    const firstAnchorCenterX = firstAnchorRect.left + firstAnchorRect.width / 2 - trackRect.left;
+    const startX = isMobile ? firstAnchorCenterX : (trackRect.width / 2);
+    const firstAnchorCenterY = firstAnchorRect.top + firstAnchorRect.height / 2 - trackRect.top;
+    const startY = Math.max(10, firstAnchorCenterY - 80);
     points.push({ x: startX, y: startY });
 
     // Collect center coordinates of each milestone anchor point relative to the track
@@ -165,8 +169,8 @@ export default function SolutionsCloudSection() {
 
     if (points.length < 2) return;
 
-    // Centripetal Catmull-Rom to Cubic Bezier with optimal smooth tension (0.26)
-    const tension = 0.26;
+    // Centripetal Catmull-Rom to Cubic Bezier with optimal smooth tension (0.26 desktop, 0.15 mobile)
+    const tension = isMobile ? 0.15 : 0.26;
     let d = `M ${points[0].x.toFixed(1)} ${points[0].y.toFixed(1)}`;
     for (let i = 0; i < points.length - 1; i++) {
       const p0 = points[i === 0 ? 0 : i - 1];
@@ -234,6 +238,8 @@ export default function SolutionsCloudSection() {
 
     const state = animStateRef.current;
     const pathLength = path.getTotalLength();
+    const isMobile = window.innerWidth < 1024;
+    const baseScale = window.innerWidth < 768 ? 0.82 : 1;
 
     // ═══ Pre-compute 1000-point LUT for O(1) path lookups ═══
     const LUT_SIZE = 1000;
@@ -268,7 +274,7 @@ export default function SolutionsCloudSection() {
     state.currentProgress = 0;
     state.targetProgress = 0;
 
-    rocket.style.transform = `translate3d(${startPt.x}px, ${startPt.y}px, 0) translate(-50%, -50%) rotate(${initialAngle}deg)`;
+    rocket.style.transform = `translate3d(${startPt.x}px, ${startPt.y}px, 0) translate(-50%, -50%) rotate(${initialAngle}deg) scale(${baseScale})`;
     rocket.style.willChange = 'transform';
 
     // Cache DOM refs once
@@ -282,11 +288,11 @@ export default function SolutionsCloudSection() {
     const atmosFlame = atmosphericFlameRef.current;
     const orbFlame = orbitalFlameRef.current;
 
-    // ═══ ScrollTrigger: ONLY tracks raw progress — zero rendering ═══
+    // ═══ ScrollTrigger: Tracks raw progress with calibrated mobile endpoints ═══
     const st = ScrollTrigger.create({
       trigger: track,
-      start: 'top 55%',
-      end: 'bottom 75%',
+      start: isMobile ? 'top 65%' : 'top 55%',
+      end: isMobile ? 'bottom 88%' : 'bottom 75%',
       onUpdate: (self) => {
         state.targetProgress = self.progress;
         state.direction = self.direction;
@@ -342,14 +348,15 @@ export default function SolutionsCloudSection() {
       if (angDiff < -180) angDiff += 360;
       state.smoothAngle += angDiff * 0.28;
 
-      // 3. Landing
-      const landed = cur > 0.91;
+      // 3. Landing — initiates as rocket descends to Card 12 and confirms on touchdown
+      const isApproachingLanding = cur > 0.92;
+      const isTouchdownConfirmed = cur >= 0.97;
       let finalAngle = state.smoothAngle;
-      let scale = 1;
-      if (landed) {
-        const lr = Math.min(1, (cur - 0.91) / 0.09);
+      let scale = baseScale;
+      if (isApproachingLanding) {
+        const lr = Math.min(1, (cur - 0.92) / 0.08);
         finalAngle = state.smoothAngle * (1 - lr);
-        scale = 1 - lr * 0.12;
+        scale = baseScale * (1 - lr * 0.12);
         if (orbFlame) orbFlame.style.opacity = Math.max(0, 1 - lr * 1.6);
       }
 
@@ -382,7 +389,7 @@ export default function SolutionsCloudSection() {
 
       // Flames
       if (atmosFlame) atmosFlame.style.opacity = s1R < 0.667 ? 1 : Math.max(0, 1 - s1R * 1.5);
-      if (orbFlame && !landed) {
+      if (orbFlame && !isApproachingLanding) {
         orbFlame.style.opacity = cur < 0.38 ? 0 : Math.min(1, (cur - 0.38) * 7.143); // /0.14
       }
 
@@ -410,8 +417,8 @@ export default function SolutionsCloudSection() {
       currentStepRef.current = stepIdx;
 
       // Card 12 landing state — direct DOM manipulation, zero re-renders
-      if (landed !== isLandedRef.current) {
-        isLandedRef.current = landed;
+      if (isTouchdownConfirmed !== isLandedRef.current) {
+        isLandedRef.current = isTouchdownConfirmed;
         const lCard = landingCardRef.current;
         const lCircle = landingCircleRef.current;
         const lBadge = landingBadgeRef.current;
@@ -419,7 +426,7 @@ export default function SolutionsCloudSection() {
         const lIndicator = landingIndicatorRef.current;
         const lFooter = landingFooterRef.current;
 
-        if (landed) {
+        if (isTouchdownConfirmed) {
           if (lCard) {
             lCard.style.borderColor = '#0ae448';
             lCard.style.boxShadow = '0 0 35px rgba(10,228,72,0.25)';
@@ -804,7 +811,7 @@ export default function SolutionsCloudSection() {
                 >
                   {/* Invisible Anchor Point for SVG Zig-Zag Path Calculation */}
                   <div
-                    className={`timeline-anchor-point absolute top-1/2 -translate-y-1/2 w-4 h-4 pointer-events-none ${
+                    className={`timeline-anchor-point absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-4 h-4 pointer-events-none ${
                       isEven ? 'left-6 lg:left-[46%]' : 'left-6 lg:left-[54%]'
                     }`}
                   ></div>

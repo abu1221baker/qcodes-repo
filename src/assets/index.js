@@ -16,10 +16,14 @@ export { default as ServerRafikiSvg } from './svg/Server-rafiki.svg';
 export { default as WebinarSvg } from './svg/Webinar-bro.svg';
 export { default as WebsiteDesignerSvg } from './svg/Website designer.svg';
 export { default as AboutUsSvg } from './svg/aboutus.svg';
-export { default as GalleryHeroSvg } from './svg/galary.svg';
+export { default as GalleryHeroSvg } from './svg/work-galary.svg';
+export { default as WorkGallerySvg } from './svg/work-galary.svg';
 export { default as OurVisionSvg } from './svg/our_vission.svg';
 export { default as ServiceHeroSvg } from './svg/service.svg';
 export { default as SolutionsHeroSvg } from './svg/solutions.svg';
+export { default as CodingSvg } from './svg/Coding.svg';
+export { default as WebsiteBuildSvg } from './svg/website build.svg';
+export { default as ContactSvg } from './svg/contact.svg';
 
 // Services SVGs
 export { default as MobileDevSvg } from './services-svg/mobile_dev.svg';
@@ -29,7 +33,7 @@ export { default as CloudSvg } from './services-svg/cloud.svg';
 export { default as DigitalMarketingSvg } from './services-svg/digital margetting.svg';
 export { default as TechSupportSvg } from './services-svg/tech_support.svg';
 export { default as SoftwareTestingSvg } from './services-svg/testing.svg';
-export { default as ContactUsSvg } from './services-svg/Contact us-cuate.svg';
+export { default as ContactUsSvg } from './svg/contact.svg';
 
 // Gallery Showcase Images
 export { default as Aim100Img } from './gallery-images/aim100-min.fe8ea19f.webp';

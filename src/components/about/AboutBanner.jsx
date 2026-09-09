@@ -51,14 +51,15 @@ export default function AboutBanner() {
 
         {/* Right Column: Hero Visual Artwork */}
         <div className="lg:col-span-5 flex items-center justify-center">
-          <div className="relative w-full max-w-md p-6 sm:p-8 rounded-3xl bg-white border border-border-subtle shadow-xl hover:shadow-2xl transition-all duration-300 group">
-            <div className="absolute top-0 right-0 w-40 h-40 bg-primary-light/40 blur-2xl rounded-full pointer-events-none" />
-            <img
-              src={AboutUsSvg}
-              alt="About Qcodes Infotech - Leading the Digital Revolution"
-              className="w-full h-auto object-contain group-hover:scale-105 transition-transform duration-500 drop-shadow-md"
-              loading="lazy"
-            />
+          <div className="relative w-full max-w-lg p-5 sm:p-8 rounded-3xl bg-white border border-border-subtle shadow-xl hover:shadow-2xl transition-all duration-300 group">
+            <div className="absolute top-0 right-0 w-48 h-48 bg-red-100/50 blur-3xl rounded-full pointer-events-none" />
+            <div className="relative w-full flex items-center justify-center overflow-hidden">
+              <img
+                src={AboutUsSvg}
+                alt="About Qcodes Infotech - Leading the Digital Revolution"
+                className="w-full h-auto max-h-[380px] object-contain transition-transform duration-500 drop-shadow-md"
+              />
+            </div>
             <div className="mt-4 pt-4 border-t border-border-subtle flex items-center justify-between text-xs font-mono text-text-muted">
               <span className="text-primary font-bold">INNOVATIVE SOLUTIONS</span>
               <span className="flex items-center gap-1 text-[#28CD41] font-semibold">

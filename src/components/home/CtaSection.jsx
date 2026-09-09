@@ -1,19 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { WebsiteDesignerSvg } from '../../assets';
+import { WebsiteBuildSvg } from '../../assets';
 
 export default function CtaSection() {
   return (
     <section className="w-full bg-[#FBF4EA]/50 py-16 px-4 sm:px-8 relative overflow-hidden border-t border-amber-200/50">
       <div className="max-w-[1440px] mx-auto rounded-3xl p-8 sm:p-12 lg:p-16 bg-white border border-border-subtle shadow-xl grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center relative">
         
-        {/* Left Column: Website Designer SVG Illustration */}
+        {/* Left Column: Website Build SVG Illustration */}
         <div className="lg:col-span-5 flex items-center justify-center">
           <div className="relative w-full max-w-[460px] p-6 sm:p-8 rounded-3xl bg-surface-dim border border-border-subtle shadow-md group hover:shadow-xl hover:border-primary/30 transition-all duration-500 flex items-center justify-center">
             <div className="absolute inset-0 bg-radial from-primary/10 via-transparent to-transparent opacity-60 pointer-events-none rounded-3xl"></div>
             <img
-              src={WebsiteDesignerSvg}
-              alt="Qcodes Infotech Website Designer & Systems Architecture"
+              src={WebsiteBuildSvg}
+              alt="Qcodes Infotech Website Build & Systems Architecture"
               className="relative z-10 w-full h-auto max-h-[340px] object-contain group-hover:scale-105 transition-transform duration-500 drop-shadow-md"
               loading="eager"
             />

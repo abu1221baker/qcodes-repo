@@ -50,13 +50,15 @@ export default function ContactHero() {
             </div>
           </div>
 
-          {/* Right Column: Clean Frame with SVG */}
+          {/* Right Column: Clean Frame with Animated contact.svg */}
           <div className="lg:col-span-5 flex justify-center items-center">
-            <div className="relative w-full max-w-md lg:max-w-none p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-white via-red-50/20 to-white border border-red-100 shadow-xl shadow-red-500/5 flex items-center justify-center group overflow-hidden">
+            <div className="relative w-full max-w-lg p-5 sm:p-8 rounded-3xl bg-gradient-to-tr from-[#FFF0F2] via-white to-red-50/40 border border-primary/15 shadow-[0_12px_40px_rgba(226,30,76,0.08)] group hover:shadow-[0_20px_50px_rgba(226,30,76,0.14)] transition-all duration-500 flex items-center justify-center overflow-hidden">
+              <div className="absolute top-0 right-0 w-44 h-44 bg-primary/10 blur-2xl rounded-full pointer-events-none" />
               <img
                 src={ContactUsSvg}
                 alt="Contact Qcodes Infotech Illustration"
-                className="w-full h-auto max-h-[340px] object-contain drop-shadow-sm group-hover:scale-[1.02] transition-transform duration-300 relative z-10"
+                className="w-full h-auto max-h-[350px] object-contain drop-shadow-md group-hover:scale-105 transition-transform duration-500 relative z-10"
+                loading="eager"
               />
             </div>
           </div>

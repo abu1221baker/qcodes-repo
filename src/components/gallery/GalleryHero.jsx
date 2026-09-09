@@ -1,5 +1,5 @@
 import React from 'react';
-import { GalleryHeroSvg } from '../../assets';
+import { WorkGallerySvg } from '../../assets';
 
 export default function GalleryHero() {
   return (
@@ -51,18 +51,19 @@ export default function GalleryHero() {
           </div>
         </div>
 
-        {/* Right Column: galary.svg Illustration */}
+        {/* Right Column: Animated work-galary.svg Illustration */}
         <div className="lg:col-span-5 flex items-center justify-center relative">
-          <div className="relative w-full max-w-[480px] p-4 sm:p-6 rounded-3xl bg-gradient-to-tr from-[#FFF0F2] via-white to-red-50/40 border border-primary/15 shadow-[0_12px_40px_rgba(226,30,76,0.08)] group hover:shadow-[0_20px_50px_rgba(226,30,76,0.14)] transition-all duration-500">
+          <div className="relative w-full max-w-[480px] p-4 sm:p-6 rounded-3xl bg-gradient-to-tr from-[#FFF0F2] via-white to-red-50/40 border border-primary/15 shadow-[0_12px_40px_rgba(226,30,76,0.08)] group hover:shadow-[0_20px_50px_rgba(226,30,76,0.14)] transition-all duration-500 flex items-center justify-center overflow-hidden">
+            <div className="absolute top-0 right-0 w-40 h-40 bg-primary/10 blur-2xl rounded-full pointer-events-none" />
             <img
-              src={GalleryHeroSvg}
+              src={WorkGallerySvg}
               alt="Qcodes Infotech Work Gallery"
-              className="w-full h-auto max-h-[360px] object-contain group-hover:scale-105 transition-transform duration-500 drop-shadow-md"
+              className="relative z-10 w-full h-auto max-h-[360px] object-contain group-hover:scale-105 transition-transform duration-500 drop-shadow-md"
               loading="eager"
             />
             
             {/* Subtle Interactive Holographic Overlay Tag */}
-            <div className="absolute -bottom-3 -right-2 sm:right-4 px-3.5 py-1.5 rounded-xl bg-white/95 backdrop-blur-md border border-border-subtle shadow-lg flex items-center gap-2 font-mono text-xs text-text-main font-bold">
+            <div className="absolute -bottom-3 -right-2 sm:right-4 px-3.5 py-1.5 rounded-xl bg-white/95 backdrop-blur-md border border-border-subtle shadow-lg flex items-center gap-2 font-mono text-xs text-text-main font-bold z-20">
               <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
               <span>SYSTEMS PORTFOLIO</span>
             </div>

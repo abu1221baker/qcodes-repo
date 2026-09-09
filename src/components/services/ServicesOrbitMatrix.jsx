@@ -364,7 +364,8 @@ export default function ServicesOrbitMatrix() {
             Tools &amp; Technologies
           </h2>
           <p className="font-sans text-xs sm:text-base text-text-muted leading-relaxed max-w-2xl">
-            Tap or hover over any circular node to explore architecture specifications, framework capabilities, and engineering links.
+            <span className="hidden lg:inline">Hover over any circular node to explore architecture specifications, framework capabilities, and engineering links.</span>
+            <span className="inline lg:hidden">Tap any circular node to view architecture specifications and technology details below.</span>
           </p>
 
           {/* Interactive Category Filter Pills */}
@@ -390,11 +391,11 @@ export default function ServicesOrbitMatrix() {
         </div>
 
         {/* ========================================================================= */}
-        {/* RESPONSIVE SCALED CIRCLE ORBIT MATRIX (Visible on ALL Viewports)           */}
+        {/* RESPONSIVE SCALED CIRCLE ORBIT MATRIX                                     */}
         {/* ========================================================================= */}
         <div 
           ref={containerRef}
-          className="relative w-full max-w-6xl mx-auto select-none overflow-hidden flex flex-col items-center justify-center"
+          className="relative w-full max-w-6xl mx-auto select-none overflow-visible flex flex-col items-center justify-center"
           style={{
             height: `${Math.round(STAGE_BASE_HEIGHT * scale)}px`,
           }}
@@ -415,35 +416,29 @@ export default function ServicesOrbitMatrix() {
               <div className="w-[600px] sm:w-[800px] h-[260px] sm:h-[320px] bg-gradient-to-r from-primary/10 via-pink-300/15 to-primary/10 blur-[100px] rounded-full opacity-60"></div>
             </div>
 
-            {/* 2. Horizontal Meteor Lines (Streaking across horizontally) */}
+            {/* 2. Horizontal Meteor Lines */}
             <div className="absolute inset-0 -z-15 pointer-events-none overflow-hidden">
-              {/* Meteor Track 1 */}
               <div className="meteor-track" style={{ top: '80px' }}>
                 <div className="meteor-head w-40" style={{ animationDuration: '4.8s', animationDelay: '0s' }}></div>
               </div>
-              {/* Meteor Track 2 */}
               <div className="meteor-track" style={{ top: '185px' }}>
                 <div className="meteor-head w-52" style={{ animationDuration: '6.4s', animationDelay: '2.2s' }}></div>
               </div>
-              {/* Meteor Track 3 */}
               <div className="meteor-track" style={{ top: '290px' }}>
                 <div className="meteor-head w-44" style={{ animationDuration: '5.1s', animationDelay: '0.9s' }}></div>
               </div>
-              {/* Meteor Track 4 */}
               <div className="meteor-track" style={{ top: '395px' }}>
                 <div className="meteor-head w-60" style={{ animationDuration: '7.2s', animationDelay: '3.4s' }}></div>
               </div>
-              {/* Meteor Track 5 */}
               <div className="meteor-track" style={{ top: '500px' }}>
                 <div className="meteor-head w-48" style={{ animationDuration: '5.6s', animationDelay: '1.5s' }}></div>
               </div>
-              {/* Meteor Track 6 */}
               <div className="meteor-track" style={{ top: '605px' }}>
                 <div className="meteor-head w-36" style={{ animationDuration: '6.1s', animationDelay: '4.1s' }}></div>
               </div>
             </div>
 
-            {/* 3. Clean Subtle Concentric Orbit Rings */}
+            {/* 3. Concentric Orbit Rings */}
             <svg
               className="absolute inset-0 w-full h-full -z-10 pointer-events-none"
               viewBox="0 0 1140 680"
@@ -459,7 +454,7 @@ export default function ServicesOrbitMatrix() {
             {/* CENTER CORE: Qcodes Infotech Central Hub */}
             <div
               className={`absolute z-30 flex items-center justify-center cursor-pointer transition-all duration-300 ${
-                hoveredNode === 'center' || activeNodeData?.id === 'center' ? 'z-[100] scale-110' : 'hover:scale-105'
+                hoveredNode === 'center' || selectedNode?.id === 'center' ? 'z-[100] scale-110' : 'hover:scale-105'
               }`}
               onClick={() => {
                 setSelectedNode({ id: 'center', name: 'Qcodes Infotech Core', category: 'Enterprise Architecture Hub', iconColor: '#E21E4C', desc: 'Central engineering headquarters founded in 2016 in Chennai, India, coordinating full-stack web, mobile, database, and cloud systems worldwide.', url: 'https://qcodesinfotech.com/aboutus', isCenter: true });
@@ -467,6 +462,42 @@ export default function ServicesOrbitMatrix() {
               onMouseEnter={() => setHoveredNode('center')}
               onMouseLeave={() => setHoveredNode(null)}
             >
+              {/* Large Viewport Hover Card Popup */}
+              <div 
+                className={`hidden lg:block absolute left-1/2 -translate-x-1/2 bottom-[calc(100%+16px)] pointer-events-auto transition-all duration-200 z-50 ${
+                  hoveredNode === 'center' ? 'opacity-100 scale-100 translate-y-0 visible' : 'opacity-0 scale-95 translate-y-2 invisible pointer-events-none'
+                }`}
+              >
+                <div className="w-72 bg-slate-900/95 backdrop-blur-md text-white p-4 rounded-xl shadow-2xl border border-white/10 ring-1 ring-primary/30 flex flex-col gap-2 text-left cursor-default">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 bg-primary/20 border border-primary/30">
+                      <img src={TabIcon} alt="Qcodes" className="w-5 h-5 object-contain" />
+                    </div>
+                    <div className="flex flex-col min-w-0">
+                      <h4 className="font-headline text-xs font-bold text-white truncate leading-tight">
+                        Qcodes Infotech Core
+                      </h4>
+                      <span className="text-[10px] font-semibold text-[#FF4D79]">
+                        Enterprise Architecture Hub
+                      </span>
+                    </div>
+                  </div>
+                  <p className="text-[11px] text-slate-300 font-sans leading-relaxed">
+                    Central engineering headquarters founded in 2016 in Chennai, India, coordinating full-stack web, mobile, database, and cloud systems worldwide.
+                  </p>
+                  <a
+                    href="https://qcodesinfotech.com/aboutus"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-between text-[10px] font-bold text-white bg-primary hover:bg-primary-dark px-2.5 py-1 rounded-lg transition-colors mt-1"
+                  >
+                    <span>Explore About Us</span>
+                    <span>→</span>
+                  </a>
+                  <div className="absolute left-1/2 -translate-x-1/2 top-full w-0 h-0 border-x-6 border-x-transparent border-t-6 border-t-slate-900/95"></div>
+                </div>
+              </div>
+
               <div className="absolute -inset-5 sm:-inset-6 rounded-full border border-primary/25 pointer-events-none">
                 <div className="absolute inset-0 rounded-full border border-transparent border-t-primary border-r-primary animate-[spin_6s_linear_infinite]"></div>
               </div>
@@ -487,6 +518,7 @@ export default function ServicesOrbitMatrix() {
               const { id, name, category, Icon, iconColor, desc, url, coords } = node;
               const isHovered = hoveredNode === id;
               const isSelected = selectedNode?.id === id;
+              const isTopPosition = coords.y < -90;
               
               let sizeClasses = 'h-15 w-15 sm:h-17 sm:w-17 p-3';
               let iconSize = 'w-7 h-7 sm:w-8 sm:h-8';
@@ -514,6 +546,52 @@ export default function ServicesOrbitMatrix() {
                   onMouseEnter={() => setHoveredNode(id)}
                   onMouseLeave={() => setHoveredNode(null)}
                 >
+                  {/* Large Viewport Hover Card Popup */}
+                  <div 
+                    className={`hidden lg:block absolute left-1/2 -translate-x-1/2 ${
+                      isTopPosition ? 'top-[calc(100%+14px)]' : 'bottom-[calc(100%+14px)]'
+                    } pointer-events-auto transition-all duration-200 z-50 ${
+                      isHovered ? 'opacity-100 scale-100 translate-y-0 visible' : 'opacity-0 scale-95 translate-y-2 invisible pointer-events-none'
+                    }`}
+                  >
+                    <div className="w-64 bg-slate-900/95 backdrop-blur-md text-white p-3.5 rounded-xl shadow-2xl border border-white/10 ring-1 ring-primary/30 flex flex-col gap-2 text-left cursor-default">
+                      <div className="flex items-center gap-2.5">
+                        <div 
+                          className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 border border-white/10"
+                          style={{ backgroundColor: `${iconColor}22` }}
+                        >
+                          <Icon className="w-4 h-4" style={{ color: iconColor }} />
+                        </div>
+                        <div className="flex flex-col min-w-0">
+                          <h4 className="font-headline text-xs font-bold text-white truncate leading-tight">
+                            {name}
+                          </h4>
+                          <span className="text-[10px] font-semibold text-[#FF4D79] truncate">
+                            {category}
+                          </span>
+                        </div>
+                      </div>
+                      <p className="text-[11px] text-slate-300 font-sans leading-relaxed line-clamp-3">
+                        {desc}
+                      </p>
+                      <a
+                        href={url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center justify-between text-[10px] font-bold text-white bg-primary hover:bg-primary-dark px-2.5 py-1 rounded-lg transition-colors mt-1"
+                      >
+                        <span>Explore {name.split(' ')[0]}</span>
+                        <span>→</span>
+                      </a>
+                      {/* Tooltip triangle indicator */}
+                      {isTopPosition ? (
+                        <div className="absolute left-1/2 -translate-x-1/2 bottom-full w-0 h-0 border-x-6 border-x-transparent border-b-6 border-b-slate-900/95"></div>
+                      ) : (
+                        <div className="absolute left-1/2 -translate-x-1/2 top-full w-0 h-0 border-x-6 border-x-transparent border-t-6 border-t-slate-900/95"></div>
+                      )}
+                    </div>
+                  </div>
+
                   <div className={`animate-[breath_${6 + (index % 3)}s_ease-in-out_${(index % 4) * 0.8}s_infinite_both]`}>
                     <div className={`flex ${sizeClasses} items-center justify-center rounded-full bg-white shadow-[0_8px_24px_rgba(0,0,0,0.08)] border-2 sm:border-3 ${
                       isSelected ? 'border-primary ring-2 ring-primary/40 shadow-[0_8px_28px_rgba(226,30,76,0.35)]' : 'border-slate-100 ring-1 ring-slate-200/80 hover:ring-primary hover:border-[#FFF0F2]'
@@ -529,55 +607,57 @@ export default function ServicesOrbitMatrix() {
         </div>
 
         {/* ========================================================================= */}
-        {/* INTERACTIVE SPECIFICATION DRAWER CARD (Works on ALL Viewports)            */}
+        {/* INTERACTIVE SPECIFICATION DRAWER CARD (Visible ONLY on Small Viewports)     */}
         {/* ========================================================================= */}
-        <div className="w-full max-w-2xl mx-auto mt-4 sm:mt-6">
-          <div className="bg-white/95 backdrop-blur-md rounded-2xl p-4 sm:p-6 border border-red-100 shadow-[0_12px_36px_rgba(226,30,76,0.08)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 transition-all duration-300">
-            
-            <div className="flex items-start sm:items-center gap-3.5 min-w-0 flex-grow">
-              <div 
-                className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 border border-slate-100 shadow-2xs"
-                style={{ backgroundColor: `${activeNodeData.iconColor || '#E21E4C'}12` }}
-              >
-                {activeNodeData.isCenter ? (
-                  <img src={TabIcon} alt="Qcodes" className="w-7 h-7 object-contain" />
-                ) : activeNodeData.Icon ? (
-                  <activeNodeData.Icon className="w-6 h-6" style={{ color: activeNodeData.iconColor }} />
-                ) : (
-                  <span className="w-3 h-3 rounded-full bg-primary animate-pulse"></span>
-                )}
-              </div>
-
-              <div className="flex flex-col min-w-0">
-                <div className="flex items-center gap-2">
-                  <h3 className="font-headline text-base sm:text-lg font-bold text-text-main truncate">
-                    {activeNodeData.name}
-                  </h3>
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+        <div className="block lg:hidden w-full max-w-2xl mx-auto mt-4 sm:mt-6">
+          {selectedNode && (
+            <div className="bg-white/95 backdrop-blur-md rounded-2xl p-4 sm:p-6 border border-red-100 shadow-[0_12px_36px_rgba(226,30,76,0.08)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 transition-all duration-300">
+              
+              <div className="flex items-start sm:items-center gap-3.5 min-w-0 flex-grow">
+                <div 
+                  className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 border border-slate-100 shadow-2xs"
+                  style={{ backgroundColor: `${selectedNode.iconColor || '#E21E4C'}12` }}
+                >
+                  {selectedNode.isCenter ? (
+                    <img src={TabIcon} alt="Qcodes" className="w-7 h-7 object-contain" />
+                  ) : selectedNode.Icon ? (
+                    <selectedNode.Icon className="w-6 h-6" style={{ color: selectedNode.iconColor }} />
+                  ) : (
+                    <span className="w-3 h-3 rounded-full bg-primary animate-pulse"></span>
+                  )}
                 </div>
-                <span className="font-sans text-[11px] sm:text-xs font-semibold text-primary block">
-                  {activeNodeData.category}
-                </span>
-                <p className="font-sans text-xs text-text-muted mt-1 leading-relaxed line-clamp-2 sm:line-clamp-3">
-                  {activeNodeData.desc}
-                </p>
+
+                <div className="flex flex-col min-w-0">
+                  <div className="flex items-center gap-2">
+                    <h3 className="font-headline text-base sm:text-lg font-bold text-text-main truncate">
+                      {selectedNode.name}
+                    </h3>
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+                  </div>
+                  <span className="font-sans text-[11px] sm:text-xs font-semibold text-primary block">
+                    {selectedNode.category}
+                  </span>
+                  <p className="font-sans text-xs text-text-muted mt-1 leading-relaxed line-clamp-2 sm:line-clamp-3">
+                    {selectedNode.desc}
+                  </p>
+                </div>
               </div>
-            </div>
 
-            {/* Direct Action Link */}
-            <div className="w-full sm:w-auto flex justify-end shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-100">
-              <a
-                href={activeNodeData.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl bg-primary hover:bg-primary-dark text-white font-sans text-xs sm:text-sm font-bold shadow-md shadow-primary/25 transition-all hover:scale-[1.02]"
-              >
-                <span>Explore {activeNodeData.name}</span>
-                <span className="text-sm">→</span>
-              </a>
-            </div>
+              {/* Direct Action Link */}
+              <div className="w-full sm:w-auto flex justify-end shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-100">
+                <a
+                  href={selectedNode.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl bg-primary hover:bg-primary-dark text-white font-sans text-xs sm:text-sm font-bold shadow-md shadow-primary/25 transition-all hover:scale-[1.02]"
+                >
+                  <span>Explore {selectedNode.name}</span>
+                  <span className="text-sm">→</span>
+                </a>
+              </div>
 
-          </div>
+            </div>
+          )}
         </div>
 
       </div>

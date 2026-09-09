@@ -1,9 +1,526 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
+const WEB_DEV_LINES = [
+  {
+    indent: 'pl-0',
+    tokens: [
+      { text: 'import ', color: 'text-[#c084fc]' },
+      { text: '{ createPortal } ', color: 'text-white' },
+      { text: 'from ', color: 'text-[#c084fc]' },
+      { text: "'@qcodes/web'", color: 'text-[#86efac]' },
+    ],
+  },
+  {
+    indent: 'pl-0',
+    tokens: [
+      { text: 'import ', color: 'text-[#c084fc]' },
+      { text: '{ useEdgeRouting } ', color: 'text-white' },
+      { text: 'from ', color: 'text-[#c084fc]' },
+      { text: "'@qcodes/react'", color: 'text-[#86efac]' },
+    ],
+  },
+  { indent: 'pl-0', spacer: true },
+  {
+    indent: 'pl-0',
+    tokens: [
+      { text: 'export function ', color: 'text-[#c084fc]' },
+      { text: 'WebPlatform', color: 'text-[#67e8f9]' },
+      { text: '() {', color: 'text-white' },
+    ],
+  },
+  {
+    indent: 'pl-4',
+    tokens: [
+      { text: 'const ', color: 'text-[#c084fc]' },
+      { text: '{ isOptimized } = ', color: 'text-white' },
+      { text: 'useEdgeRouting', color: 'text-[#67e8f9]' },
+      { text: '({', color: 'text-white' },
+    ],
+  },
+  {
+    indent: 'pl-8',
+    tokens: [
+      { text: 'rendering: ', color: 'text-slate-300' },
+      { text: "'Incremental Static Regeneration'", color: 'text-[#86efac]' },
+      { text: ',', color: 'text-white' },
+    ],
+  },
+  {
+    indent: 'pl-8',
+    tokens: [
+      { text: 'cacheStrategy: ', color: 'text-slate-300' },
+      { text: "'Global Edge Mesh'", color: 'text-[#86efac]' },
+      { text: ',', color: 'text-white' },
+    ],
+  },
+  {
+    indent: 'pl-8',
+    tokens: [
+      { text: 'vitals: ', color: 'text-slate-300' },
+      { text: "'100% Core Web Vitals'", color: 'text-[#86efac]' },
+    ],
+  },
+  {
+    indent: 'pl-4',
+    tokens: [
+      { text: '})', color: 'text-white' },
+    ],
+  },
+  { indent: 'pl-0', spacer: true },
+  {
+    indent: 'pl-4',
+    tokens: [
+      { text: 'return ', color: 'text-[#c084fc]' },
+      { text: '(', color: 'text-white' },
+    ],
+  },
+  {
+    indent: 'pl-8',
+    tokens: [
+      { text: '<div ', color: 'text-[#67e8f9]' },
+      { text: 'className', color: 'text-[#fde047]' },
+      { text: '=', color: 'text-white' },
+      { text: '"enterprise-portal"', color: 'text-[#86efac]' },
+      { text: '>', color: 'text-[#67e8f9]' },
+    ],
+  },
+  {
+    indent: 'pl-12',
+    tokens: [
+      { text: '<h1>', color: 'text-[#67e8f9]' },
+      { text: 'Modern Scalable Web Architecture', color: 'text-white' },
+      { text: '</h1>', color: 'text-[#67e8f9]' },
+    ],
+  },
+  {
+    indent: 'pl-12',
+    tokens: [
+      { text: '<p>', color: 'text-[#67e8f9]' },
+      { text: 'Sub-120ms P95 API Response Hydration', color: 'text-pink-400' },
+      { text: '</p>', color: 'text-[#67e8f9]' },
+    ],
+  },
+  {
+    indent: 'pl-8',
+    tokens: [
+      { text: '</div>', color: 'text-[#67e8f9]' },
+    ],
+  },
+  {
+    indent: 'pl-4',
+    tokens: [
+      { text: ')', color: 'text-white' },
+    ],
+  },
+  {
+    indent: 'pl-0',
+    tokens: [
+      { text: '}', color: 'text-white' },
+    ],
+  },
+];
+
+const MOBILE_DEV_LINES = [
+  {
+    indent: 'pl-0',
+    tokens: [
+      { text: 'import ', color: 'text-[#c084fc]' },
+      { text: 'React ', color: 'text-white' },
+      { text: 'from ', color: 'text-[#c084fc]' },
+      { text: "'react'", color: 'text-[#86efac]' },
+    ],
+  },
+  {
+    indent: 'pl-0',
+    tokens: [
+      { text: 'import ', color: 'text-[#c084fc]' },
+      { text: '{ View, Text } ', color: 'text-white' },
+      { text: 'from ', color: 'text-[#c084fc]' },
+      { text: "'react-native'", color: 'text-[#86efac]' },
+    ],
+  },
+  {
+    indent: 'pl-0',
+    tokens: [
+      { text: 'import ', color: 'text-[#c084fc]' },
+      { text: '{ QcodesBiometrics, OfflineSync } ', color: 'text-white' },
+      { text: 'from ', color: 'text-[#c084fc]' },
+      { text: "'@qcodes/mobile'", color: 'text-[#86efac]' },
+    ],
+  },
+  { indent: 'pl-0', spacer: true },
+  {
+    indent: 'pl-0',
+    tokens: [
+      { text: 'export function ', color: 'text-[#c084fc]' },
+      { text: 'MobileApp', color: 'text-[#67e8f9]' },
+      { text: '() {', color: 'text-white' },
+    ],
+  },
+  {
+    indent: 'pl-4',
+    tokens: [
+      { text: 'const ', color: 'text-[#c084fc]' },
+      { text: 'syncEngine', color: 'text-[#67e8f9]' },
+      { text: ' = ', color: 'text-white' },
+      { text: 'async ', color: 'text-[#c084fc]' },
+      { text: '() => {', color: 'text-white' },
+    ],
+  },
+  {
+    indent: 'pl-8',
+    tokens: [
+      { text: 'await ', color: 'text-[#c084fc]' },
+      { text: 'QcodesBiometrics', color: 'text-[#67e8f9]' },
+      { text: '.', color: 'text-white' },
+      { text: 'authenticate', color: 'text-[#67e8f9]' },
+      { text: '(', color: 'text-white' },
+      { text: "'Biometric FaceID'", color: 'text-[#86efac]' },
+      { text: ')', color: 'text-white' },
+    ],
+  },
+  {
+    indent: 'pl-8',
+    tokens: [
+      { text: 'await ', color: 'text-[#c084fc]' },
+      { text: 'OfflineSync', color: 'text-[#67e8f9]' },
+      { text: '.', color: 'text-white' },
+      { text: 'hydrateSQLite', color: 'text-[#67e8f9]' },
+      { text: '({ ', color: 'text-white' },
+      { text: 'frameRate: ', color: 'text-slate-300' },
+      { text: "'60 FPS'", color: 'text-[#86efac]' },
+      { text: ' })', color: 'text-white' },
+    ],
+  },
+  {
+    indent: 'pl-4',
+    tokens: [
+      { text: '}', color: 'text-white' },
+    ],
+  },
+  { indent: 'pl-0', spacer: true },
+  {
+    indent: 'pl-4',
+    tokens: [
+      { text: 'return ', color: 'text-[#c084fc]' },
+      { text: '(', color: 'text-white' },
+    ],
+  },
+  {
+    indent: 'pl-8',
+    tokens: [
+      { text: '<View ', color: 'text-[#67e8f9]' },
+      { text: 'style', color: 'text-[#fde047]' },
+      { text: '={{ ', color: 'text-white' },
+      { text: 'flex: 1, backgroundColor: ', color: 'text-slate-300' },
+      { text: "'#0B0F19'", color: 'text-[#86efac]' },
+      { text: ' }}', color: 'text-white' },
+      { text: '>', color: 'text-[#67e8f9]' },
+    ],
+  },
+  {
+    indent: 'pl-12',
+    tokens: [
+      { text: '<Text ', color: 'text-[#67e8f9]' },
+      { text: 'style', color: 'text-[#fde047]' },
+      { text: '={{ ', color: 'text-white' },
+      { text: 'color: ', color: 'text-slate-300' },
+      { text: "'#FF3366'", color: 'text-[#86efac]' },
+      { text: ' }}', color: 'text-white' },
+      { text: '>', color: 'text-[#67e8f9]' },
+      { text: 'Native iOS & Android Architecture', color: 'text-white' },
+      { text: '</Text>', color: 'text-[#67e8f9]' },
+    ],
+  },
+  {
+    indent: 'pl-8',
+    tokens: [
+      { text: '</View>', color: 'text-[#67e8f9]' },
+    ],
+  },
+  {
+    indent: 'pl-4',
+    tokens: [
+      { text: ')', color: 'text-white' },
+    ],
+  },
+  {
+    indent: 'pl-0',
+    tokens: [
+      { text: '}', color: 'text-white' },
+    ],
+  },
+];
+
+const CLOUD_LINES = [
+  {
+    indent: 'pl-0',
+    tokens: [
+      { text: 'import ', color: 'text-[#c084fc]' },
+      { text: '{ MultiRegionCluster } ', color: 'text-white' },
+      { text: 'from ', color: 'text-[#c084fc]' },
+      { text: "'@qcodes/cloud'", color: 'text-[#86efac]' },
+    ],
+  },
+  { indent: 'pl-0', spacer: true },
+  {
+    indent: 'pl-0',
+    tokens: [
+      { text: 'export const ', color: 'text-[#c084fc]' },
+      { text: 'deployEnterpriseCloud', color: 'text-[#67e8f9]' },
+      { text: ' = ', color: 'text-white' },
+      { text: 'async ', color: 'text-[#c084fc]' },
+      { text: '() => {', color: 'text-white' },
+    ],
+  },
+  {
+    indent: 'pl-4',
+    tokens: [
+      { text: 'const ', color: 'text-[#c084fc]' },
+      { text: 'cluster = ', color: 'text-white' },
+      { text: 'await ', color: 'text-[#c084fc]' },
+      { text: 'MultiRegionCluster', color: 'text-[#67e8f9]' },
+      { text: '.', color: 'text-white' },
+      { text: 'provision', color: 'text-[#67e8f9]' },
+      { text: '({', color: 'text-white' },
+    ],
+  },
+  {
+    indent: 'pl-8',
+    tokens: [
+      { text: 'kubernetes: ', color: 'text-slate-300' },
+      { text: "'EKS Auto-Scaling 1.30'", color: 'text-[#86efac]' },
+      { text: ',', color: 'text-white' },
+    ],
+  },
+  {
+    indent: 'pl-8',
+    tokens: [
+      { text: 'infrastructure: ', color: 'text-slate-300' },
+      { text: "'Terraform IaC'", color: 'text-[#86efac]' },
+      { text: ',', color: 'text-white' },
+    ],
+  },
+  {
+    indent: 'pl-8',
+    tokens: [
+      { text: 'uptimeSla: ', color: 'text-slate-300' },
+      { text: "'99.995% High Availability'", color: 'text-[#86efac]' },
+      { text: ',', color: 'text-white' },
+    ],
+  },
+  {
+    indent: 'pl-8',
+    tokens: [
+      { text: 'disasterRecovery: ', color: 'text-slate-300' },
+      { text: "'Zero-Data-Loss Failover'", color: 'text-[#86efac]' },
+    ],
+  },
+  {
+    indent: 'pl-4',
+    tokens: [
+      { text: '})', color: 'text-white' },
+    ],
+  },
+  { indent: 'pl-0', spacer: true },
+  {
+    indent: 'pl-4',
+    tokens: [
+      { text: 'return ', color: 'text-[#c084fc]' },
+      { text: 'cluster.', color: 'text-white' },
+      { text: 'deploy', color: 'text-[#67e8f9]' },
+      { text: '()', color: 'text-white' },
+    ],
+  },
+  {
+    indent: 'pl-0',
+    tokens: [
+      { text: '}', color: 'text-white' },
+    ],
+  },
+];
+
+const AI_LINES = [
+  {
+    indent: 'pl-0',
+    tokens: [
+      { text: 'from ', color: 'text-[#c084fc]' },
+      { text: 'qcodes_ai ', color: 'text-white' },
+      { text: 'import ', color: 'text-[#c084fc]' },
+      { text: 'NeuralInference', color: 'text-[#67e8f9]' },
+      { text: ', ', color: 'text-white' },
+      { text: 'VectorMesh', color: 'text-[#67e8f9]' },
+    ],
+  },
+  { indent: 'pl-0', spacer: true },
+  {
+    indent: 'pl-0',
+    tokens: [
+      { text: 'async def ', color: 'text-[#c084fc]' },
+      { text: 'run_predictive_pipeline', color: 'text-[#67e8f9]' },
+      { text: '(input_stream):', color: 'text-white' },
+    ],
+  },
+  {
+    indent: 'pl-4',
+    tokens: [
+      { text: '"""Real-time enterprise ML inference model"""', color: 'text-[#94a3b8] italic' },
+    ],
+  },
+  {
+    indent: 'pl-4',
+    tokens: [
+      { text: 'mesh = ', color: 'text-white' },
+      { text: 'VectorMesh', color: 'text-[#67e8f9]' },
+      { text: '.', color: 'text-white' },
+      { text: 'connect', color: 'text-[#67e8f9]' },
+      { text: '(', color: 'text-white' },
+      { text: '"qcodes-vector-cluster"', color: 'text-[#86efac]' },
+      { text: ')', color: 'text-white' },
+    ],
+  },
+  {
+    indent: 'pl-4',
+    tokens: [
+      { text: 'model = ', color: 'text-white' },
+      { text: 'NeuralInference', color: 'text-[#67e8f9]' },
+      { text: '.', color: 'text-white' },
+      { text: 'load', color: 'text-[#67e8f9]' },
+      { text: '(', color: 'text-white' },
+      { text: '"qcodes-deep-v4"', color: 'text-[#86efac]' },
+      { text: ')', color: 'text-white' },
+    ],
+  },
+  { indent: 'pl-0', spacer: true },
+  {
+    indent: 'pl-4',
+    tokens: [
+      { text: 'embeddings = ', color: 'text-white' },
+      { text: 'await ', color: 'text-[#c084fc]' },
+      { text: 'mesh.', color: 'text-white' },
+      { text: 'embed_query', color: 'text-[#67e8f9]' },
+      { text: '(input_stream)', color: 'text-white' },
+    ],
+  },
+  {
+    indent: 'pl-4',
+    tokens: [
+      { text: 'prediction = ', color: 'text-white' },
+      { text: 'await ', color: 'text-[#c084fc]' },
+      { text: 'model.', color: 'text-white' },
+      { text: 'predict_async', color: 'text-[#67e8f9]' },
+      { text: '(embeddings)', color: 'text-white' },
+    ],
+  },
+  {
+    indent: 'pl-4',
+    tokens: [
+      { text: 'return ', color: 'text-[#c084fc]' },
+      { text: '{', color: 'text-white' },
+      { text: '"accuracy"', color: 'text-[#86efac]' },
+      { text: ': ', color: 'text-white' },
+      { text: '0.998', color: 'text-[#fde047]' },
+      { text: ', ', color: 'text-white' },
+      { text: '"latency_ms"', color: 'text-[#86efac]' },
+      { text: ': ', color: 'text-white' },
+      { text: '14.2', color: 'text-[#fde047]' },
+      { text: ', ', color: 'text-white' },
+      { text: '"output"', color: 'text-[#86efac]' },
+      { text: ': prediction}', color: 'text-white' },
+    ],
+  },
+];
+
+const ENTERPRISE_LINES = [
+  {
+    indent: 'pl-0',
+    tokens: [
+      { text: 'import ', color: 'text-[#c084fc]' },
+      { text: '{ EnterpriseCRM, PayrollEngine } ', color: 'text-white' },
+      { text: 'from ', color: 'text-[#c084fc]' },
+      { text: "'@qcodes/enterprise'", color: 'text-[#86efac]' },
+    ],
+  },
+  { indent: 'pl-0', spacer: true },
+  {
+    indent: 'pl-0',
+    tokens: [
+      { text: 'export function ', color: 'text-[#c084fc]' },
+      { text: 'manageWorkforceLifecycle', color: 'text-[#67e8f9]' },
+      { text: '() {', color: 'text-white' },
+    ],
+  },
+  {
+    indent: 'pl-4',
+    tokens: [
+      { text: 'const ', color: 'text-[#c084fc]' },
+      { text: 'crm = ', color: 'text-white' },
+      { text: 'new ', color: 'text-[#c084fc]' },
+      { text: 'EnterpriseCRM', color: 'text-[#67e8f9]' },
+      { text: '({ ', color: 'text-white' },
+      { text: 'encryption: ', color: 'text-slate-300' },
+      { text: "'AES-256-GCM'", color: 'text-[#86efac]' },
+      { text: ' })', color: 'text-white' },
+    ],
+  },
+  {
+    indent: 'pl-4',
+    tokens: [
+      { text: 'const ', color: 'text-[#c084fc]' },
+      { text: 'payroll = ', color: 'text-white' },
+      { text: 'new ', color: 'text-[#c084fc]' },
+      { text: 'PayrollEngine', color: 'text-[#67e8f9]' },
+      { text: '({ ', color: 'text-white' },
+      { text: 'automatedTaxes: ', color: 'text-slate-300' },
+      { text: 'true', color: 'text-[#c084fc]' },
+      { text: ' })', color: 'text-white' },
+    ],
+  },
+  { indent: 'pl-0', spacer: true },
+  {
+    indent: 'pl-4',
+    tokens: [
+      { text: 'return ', color: 'text-[#c084fc]' },
+      { text: '{', color: 'text-white' },
+    ],
+  },
+  {
+    indent: 'pl-8',
+    tokens: [
+      { text: 'workforceSync: ', color: 'text-slate-300' },
+      { text: 'crm.', color: 'text-white' },
+      { text: 'syncGlobalWorkforce', color: 'text-[#67e8f9]' },
+      { text: '(),', color: 'text-white' },
+    ],
+  },
+  {
+    indent: 'pl-8',
+    tokens: [
+      { text: 'automatedCompliance: ', color: 'text-slate-300' },
+      { text: 'payroll.', color: 'text-white' },
+      { text: 'executePayrollRun', color: 'text-[#67e8f9]' },
+      { text: '()', color: 'text-white' },
+    ],
+  },
+  {
+    indent: 'pl-4',
+    tokens: [
+      { text: '}', color: 'text-white' },
+    ],
+  },
+  {
+    indent: 'pl-0',
+    tokens: [
+      { text: '}', color: 'text-white' },
+    ],
+  },
+];
 
 const serviceSnippets = {
   'WebDev.jsx': {
     name: 'Web Dev',
     lang: 'jsx',
+    lines: WEB_DEV_LINES,
     raw: `import { createPortal } from '@qcodes/web'
 import { useEdgeRouting } from '@qcodes/react'
 
@@ -21,86 +538,11 @@ export function WebPlatform() {
     </div>
   )
 }`,
-    render: () => (
-      <div className="space-y-1 font-mono text-xs sm:text-[13px]">
-        <div>
-          <span className="text-[#c084fc]">import </span>
-          <span className="text-white">{'{ createPortal }'} </span>
-          <span className="text-[#c084fc]">from </span>
-          <span className="text-[#86efac]">'@qcodes/web'</span>
-        </div>
-        <div>
-          <span className="text-[#c084fc]">import </span>
-          <span className="text-white">{'{ useEdgeRouting }'} </span>
-          <span className="text-[#c084fc]">from </span>
-          <span className="text-[#86efac]">'@qcodes/react'</span>
-        </div>
-        <div className="h-2"></div>
-        <div>
-          <span className="text-[#c084fc]">export function </span>
-          <span className="text-[#67e8f9]">WebPlatform</span>
-          <span className="text-white">() {'{'}</span>
-        </div>
-        <div className="pl-4">
-          <span className="text-[#c084fc]">const </span>
-          <span className="text-white">{'{ isOptimized }'} = </span>
-          <span className="text-[#67e8f9]">useEdgeRouting</span>
-          <span className="text-white">({'{'}</span>
-        </div>
-        <div className="pl-8">
-          <span className="text-slate-300">rendering: </span>
-          <span className="text-[#86efac]">'Incremental Static Regeneration'</span>
-          <span className="text-white">,</span>
-        </div>
-        <div className="pl-8">
-          <span className="text-slate-300">cacheStrategy: </span>
-          <span className="text-[#86efac]">'Global Edge Mesh'</span>
-          <span className="text-white">,</span>
-        </div>
-        <div className="pl-8">
-          <span className="text-slate-300">vitals: </span>
-          <span className="text-[#86efac]">'100% Core Web Vitals'</span>
-        </div>
-        <div className="pl-4">
-          <span className="text-white">{'}'})</span>
-        </div>
-        <div className="h-2"></div>
-        <div className="pl-4">
-          <span className="text-[#c084fc]">return </span>
-          <span className="text-white">(</span>
-        </div>
-        <div className="pl-8">
-          <span className="text-[#67e8f9]">&lt;div </span>
-          <span className="text-[#fde047]">className</span>
-          <span className="text-white">=</span>
-          <span className="text-[#86efac]">"enterprise-portal"</span>
-          <span className="text-[#67e8f9]">&gt;</span>
-        </div>
-        <div className="pl-12">
-          <span className="text-[#67e8f9]">&lt;h1&gt;</span>
-          <span className="text-white">Modern Scalable Web Architecture</span>
-          <span className="text-[#67e8f9]">&lt;/h1&gt;</span>
-        </div>
-        <div className="pl-12">
-          <span className="text-[#67e8f9]">&lt;p&gt;</span>
-          <span className="text-pink-400">Sub-120ms P95 API Response Hydration</span>
-          <span className="text-[#67e8f9]">&lt;/p&gt;</span>
-        </div>
-        <div className="pl-8">
-          <span className="text-[#67e8f9]">&lt;/div&gt;</span>
-        </div>
-        <div className="pl-4">
-          <span className="text-white">)</span>
-        </div>
-        <div>
-          <span className="text-white">{'}'}</span>
-        </div>
-      </div>
-    )
   },
   'MobileDev.tsx': {
     name: 'Mobile Dev',
     lang: 'tsx',
+    lines: MOBILE_DEV_LINES,
     raw: `import React from 'react'
 import { View, Text } from 'react-native'
 import { QcodesBiometrics, OfflineSync } from '@qcodes/mobile'
@@ -120,101 +562,11 @@ export function MobileApp() {
     </View>
   )
 }`,
-    render: () => (
-      <div className="space-y-1 font-mono text-xs sm:text-[13px]">
-        <div>
-          <span className="text-[#c084fc]">import </span>
-          <span className="text-white">React </span>
-          <span className="text-[#c084fc]">from </span>
-          <span className="text-[#86efac]">'react'</span>
-        </div>
-        <div>
-          <span className="text-[#c084fc]">import </span>
-          <span className="text-white">{'{ View, Text }'} </span>
-          <span className="text-[#c084fc]">from </span>
-          <span className="text-[#86efac]">'react-native'</span>
-        </div>
-        <div>
-          <span className="text-[#c084fc]">import </span>
-          <span className="text-white">{'{ QcodesBiometrics, OfflineSync }'} </span>
-          <span className="text-[#c084fc]">from </span>
-          <span className="text-[#86efac]">'@qcodes/mobile'</span>
-        </div>
-        <div className="h-2"></div>
-        <div>
-          <span className="text-[#c084fc]">export function </span>
-          <span className="text-[#67e8f9]">MobileApp</span>
-          <span className="text-white">() {'{'}</span>
-        </div>
-        <div className="pl-4">
-          <span className="text-[#c084fc]">const </span>
-          <span className="text-[#67e8f9]">syncEngine</span>
-          <span className="text-white"> = </span>
-          <span className="text-[#c084fc]">async </span>
-          <span className="text-white">() =&gt; {'{'}</span>
-        </div>
-        <div className="pl-8">
-          <span className="text-[#c084fc]">await </span>
-          <span className="text-[#67e8f9]">QcodesBiometrics</span>
-          <span className="text-white">.</span>
-          <span className="text-[#67e8f9]">authenticate</span>
-          <span className="text-white">(</span>
-          <span className="text-[#86efac]">'Biometric FaceID'</span>
-          <span className="text-white">)</span>
-        </div>
-        <div className="pl-8">
-          <span className="text-[#c084fc]">await </span>
-          <span className="text-[#67e8f9]">OfflineSync</span>
-          <span className="text-white">.</span>
-          <span className="text-[#67e8f9]">hydrateSQLite</span>
-          <span className="text-white">({'{ '}</span>
-          <span className="text-slate-300">frameRate: </span>
-          <span className="text-[#86efac]">'60 FPS'</span>
-          <span className="text-white">{' }'})</span>
-        </div>
-        <div className="pl-4">
-          <span className="text-white">{'}'}</span>
-        </div>
-        <div className="h-2"></div>
-        <div className="pl-4">
-          <span className="text-[#c084fc]">return </span>
-          <span className="text-white">(</span>
-        </div>
-        <div className="pl-8">
-          <span className="text-[#67e8f9]">&lt;View </span>
-          <span className="text-[#fde047]">style</span>
-          <span className="text-white">={'{{ '}</span>
-          <span className="text-slate-300">flex: 1, backgroundColor: </span>
-          <span className="text-[#86efac]'">'#0B0F19'</span>
-          <span className="text-white">{' }}'}</span>
-          <span className="text-[#67e8f9]">&gt;</span>
-        </div>
-        <div className="pl-12">
-          <span className="text-[#67e8f9]">&lt;Text </span>
-          <span className="text-[#fde047]">style</span>
-          <span className="text-white">={'{{ '}</span>
-          <span className="text-slate-300">color: </span>
-          <span className="text-[#86efac]">'#FF3366'</span>
-          <span className="text-white">{' }}'}</span>
-          <span className="text-[#67e8f9]">&gt;</span>
-          <span className="text-white">Native iOS &amp; Android Architecture</span>
-          <span className="text-[#67e8f9]">&lt;/Text&gt;</span>
-        </div>
-        <div className="pl-8">
-          <span className="text-[#67e8f9]">&lt;/View&gt;</span>
-        </div>
-        <div className="pl-4">
-          <span className="text-white">)</span>
-        </div>
-        <div>
-          <span className="text-white">{'}'}</span>
-        </div>
-      </div>
-    )
   },
   'CloudDevOps.ts': {
     name: 'Cloud & DevOps',
     lang: 'ts',
+    lines: CLOUD_LINES,
     raw: `import { MultiRegionCluster } from '@qcodes/cloud'
 
 export const deployEnterpriseCloud = async () => {
@@ -227,69 +579,11 @@ export const deployEnterpriseCloud = async () => {
 
   return cluster.deploy()
 }`,
-    render: () => (
-      <div className="space-y-1 font-mono text-xs sm:text-[13px]">
-        <div>
-          <span className="text-[#c084fc]">import </span>
-          <span className="text-white">{'{ MultiRegionCluster }'} </span>
-          <span className="text-[#c084fc]">from </span>
-          <span className="text-[#86efac]">'@qcodes/cloud'</span>
-        </div>
-        <div className="h-2"></div>
-        <div>
-          <span className="text-[#c084fc]">export const </span>
-          <span className="text-[#67e8f9]">deployEnterpriseCloud</span>
-          <span className="text-white"> = </span>
-          <span className="text-[#c084fc]">async </span>
-          <span className="text-white">() =&gt; {'{'}</span>
-        </div>
-        <div className="pl-4">
-          <span className="text-[#c084fc]">const </span>
-          <span className="text-white">cluster = </span>
-          <span className="text-[#c084fc]">await </span>
-          <span className="text-[#67e8f9]">MultiRegionCluster</span>
-          <span className="text-white">.</span>
-          <span className="text-[#67e8f9]">provision</span>
-          <span className="text-white">({'{'}</span>
-        </div>
-        <div className="pl-8">
-          <span className="text-slate-300">kubernetes: </span>
-          <span className="text-[#86efac]">'EKS Auto-Scaling 1.30'</span>
-          <span className="text-white">,</span>
-        </div>
-        <div className="pl-8">
-          <span className="text-slate-300">infrastructure: </span>
-          <span className="text-[#86efac]">'Terraform IaC'</span>
-          <span className="text-white">,</span>
-        </div>
-        <div className="pl-8">
-          <span className="text-slate-300">uptimeSla: </span>
-          <span className="text-[#86efac]">'99.995% High Availability'</span>
-          <span className="text-white">,</span>
-        </div>
-        <div className="pl-8">
-          <span className="text-slate-300">disasterRecovery: </span>
-          <span className="text-[#86efac]">'Zero-Data-Loss Failover'</span>
-        </div>
-        <div className="pl-4">
-          <span className="text-white">{'}'})</span>
-        </div>
-        <div className="h-2"></div>
-        <div className="pl-4">
-          <span className="text-[#c084fc]">return </span>
-          <span className="text-white">cluster.</span>
-          <span className="text-[#67e8f9]">deploy</span>
-          <span className="text-white">()</span>
-        </div>
-        <div>
-          <span className="text-white">{'}'}</span>
-        </div>
-      </div>
-    )
   },
   'AiModel.py': {
     name: 'AI & Data',
     lang: 'py',
+    lines: AI_LINES,
     raw: `from qcodes_ai import NeuralInference, VectorMesh
 
 async def run_predictive_pipeline(input_stream):
@@ -300,78 +594,11 @@ async def run_predictive_pipeline(input_stream):
     embeddings = await mesh.embed_query(input_stream)
     prediction = await model.predict_async(embeddings)
     return {"accuracy": 0.998, "latency_ms": 14.2, "output": prediction}`,
-    render: () => (
-      <div className="space-y-1 font-mono text-xs sm:text-[13px]">
-        <div>
-          <span className="text-[#c084fc]">from </span>
-          <span className="text-white">qcodes_ai </span>
-          <span className="text-[#c084fc]">import </span>
-          <span className="text-[#67e8f9]">NeuralInference</span>
-          <span className="text-white">, </span>
-          <span className="text-[#67e8f9]">VectorMesh</span>
-        </div>
-        <div className="h-2"></div>
-        <div>
-          <span className="text-[#c084fc]">async def </span>
-          <span className="text-[#67e8f9]">run_predictive_pipeline</span>
-          <span className="text-white">(input_stream):</span>
-        </div>
-        <div className="pl-4 text-[#94a3b8] italic">
-          """Real-time enterprise ML inference model"""
-        </div>
-        <div className="pl-4">
-          <span className="text-white">mesh = </span>
-          <span className="text-[#67e8f9]">VectorMesh</span>
-          <span className="text-white">.</span>
-          <span className="text-[#67e8f9]">connect</span>
-          <span className="text-white">(</span>
-          <span className="text-[#86efac]">"qcodes-vector-cluster"</span>
-          <span className="text-white">)</span>
-        </div>
-        <div className="pl-4">
-          <span className="text-white">model = </span>
-          <span className="text-[#67e8f9]">NeuralInference</span>
-          <span className="text-white">.</span>
-          <span className="text-[#67e8f9]">load</span>
-          <span className="text-white">(</span>
-          <span className="text-[#86efac]">"qcodes-deep-v4"</span>
-          <span className="text-white">)</span>
-        </div>
-        <div className="h-2"></div>
-        <div className="pl-4">
-          <span className="text-white">embeddings = </span>
-          <span className="text-[#c084fc]">await </span>
-          <span className="text-white">mesh.</span>
-          <span className="text-[#67e8f9]">embed_query</span>
-          <span className="text-white">(input_stream)</span>
-        </div>
-        <div className="pl-4">
-          <span className="text-white">prediction = </span>
-          <span className="text-[#c084fc]">await </span>
-          <span className="text-white">model.</span>
-          <span className="text-[#67e8f9]">predict_async</span>
-          <span className="text-white">(embeddings)</span>
-        </div>
-        <div className="pl-4">
-          <span className="text-[#c084fc]">return </span>
-          <span className="text-white">{'{'}</span>
-          <span className="text-[#86efac]">"accuracy"</span>
-          <span className="text-white">: </span>
-          <span className="text-[#fde047]">0.998</span>
-          <span className="text-white">, </span>
-          <span className="text-[#86efac]">"latency_ms"</span>
-          <span className="text-white">: </span>
-          <span className="text-[#fde047]">14.2</span>
-          <span className="text-white">, </span>
-          <span className="text-[#86efac]">"output"</span>
-          <span className="text-white">: prediction{'}'}</span>
-        </div>
-      </div>
-    )
   },
   'EnterpriseERP.ts': {
     name: 'Software Systems',
     lang: 'ts',
+    lines: ENTERPRISE_LINES,
     raw: `import { EnterpriseCRM, PayrollEngine } from '@qcodes/enterprise'
 
 export function manageWorkforceLifecycle() {
@@ -383,71 +610,40 @@ export function manageWorkforceLifecycle() {
     automatedCompliance: payroll.executePayrollRun()
   }
 }`,
-    render: () => (
-      <div className="space-y-1 font-mono text-xs sm:text-[13px]">
-        <div>
-          <span className="text-[#c084fc]">import </span>
-          <span className="text-white">{'{ EnterpriseCRM, PayrollEngine }'} </span>
-          <span className="text-[#c084fc]">from </span>
-          <span className="text-[#86efac]">'@qcodes/enterprise'</span>
-        </div>
-        <div className="h-2"></div>
-        <div>
-          <span className="text-[#c084fc]">export function </span>
-          <span className="text-[#67e8f9]">manageWorkforceLifecycle</span>
-          <span className="text-white">() {'{'}</span>
-        </div>
-        <div className="pl-4">
-          <span className="text-[#c084fc]">const </span>
-          <span className="text-white">crm = </span>
-          <span className="text-[#c084fc]">new </span>
-          <span className="text-[#67e8f9]">EnterpriseCRM</span>
-          <span className="text-white">({'{ '}</span>
-          <span className="text-slate-300">encryption: </span>
-          <span className="text-[#86efac]">'AES-256-GCM'</span>
-          <span className="text-white">{' }'})</span>
-        </div>
-        <div className="pl-4">
-          <span className="text-[#c084fc]">const </span>
-          <span className="text-white">payroll = </span>
-          <span className="text-[#c084fc]">new </span>
-          <span className="text-[#67e8f9]">PayrollEngine</span>
-          <span className="text-white">({'{ '}</span>
-          <span className="text-slate-300">automatedTaxes: </span>
-          <span className="text-[#c084fc]">true</span>
-          <span className="text-white">{' }'})</span>
-        </div>
-        <div className="h-2"></div>
-        <div className="pl-4">
-          <span className="text-[#c084fc]">return </span>
-          <span className="text-white">{'{'}</span>
-        </div>
-        <div className="pl-8">
-          <span className="text-slate-300">workforceSync: </span>
-          <span className="text-white">crm.</span>
-          <span className="text-[#67e8f9]">syncGlobalWorkforce</span>
-          <span className="text-white">(),</span>
-        </div>
-        <div className="pl-8">
-          <span className="text-slate-300">automatedCompliance: </span>
-          <span className="text-white">payroll.</span>
-          <span className="text-[#67e8f9]">executePayrollRun</span>
-          <span className="text-white">()</span>
-        </div>
-        <div className="pl-4">
-          <span className="text-white">{'}'}</span>
-        </div>
-        <div>
-          <span className="text-white">{'}'}</span>
-        </div>
-      </div>
-    )
-  }
+  },
+};
+
+const getTotalLength = (lines) => {
+  return lines.reduce((total, line) => {
+    if (line.spacer) return total + 1;
+    return total + (line.tokens ? line.tokens.reduce((acc, t) => acc + t.text.length, 0) : 0);
+  }, 0);
 };
 
 export default function ServicesHero() {
   const [activeTab, setActiveTab] = useState('WebDev.jsx');
   const [copied, setCopied] = useState(false);
+  const [isDoneTyping, setIsDoneTyping] = useState(false);
+  const [charIndex, setCharIndex] = useState(0);
+
+  const initialTotalChars = getTotalLength(WEB_DEV_LINES);
+
+  // Single-run typing animation on initial page load / browser reload only
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCharIndex((prev) => {
+        if (prev < initialTotalChars) {
+          return prev + 1;
+        } else {
+          clearInterval(intervalId);
+          setIsDoneTyping(true);
+          return prev;
+        }
+      });
+    }, 10);
+
+    return () => clearInterval(intervalId);
+  }, [initialTotalChars]);
 
   const handleCopy = () => {
     const raw = serviceSnippets[activeTab]?.raw || '';
@@ -457,6 +653,84 @@ export default function ServicesHero() {
   };
 
   const activeSnippet = serviceSnippets[activeTab] || serviceSnippets['WebDev.jsx'];
+  const currentLines = activeSnippet.lines;
+  const currentTotal = getTotalLength(currentLines);
+  const effectiveCharCount = isDoneTyping || activeTab !== 'WebDev.jsx' ? currentTotal : charIndex;
+
+  let remaining = effectiveCharCount;
+  let cursorPlaced = false;
+
+  const renderedLines = currentLines.map((line, lineIdx) => {
+    if (line.spacer) {
+      if (remaining <= 0 && cursorPlaced) return null;
+      if (remaining > 0) remaining -= 1;
+      return <div key={lineIdx} className="h-2" />;
+    }
+
+    const tokenElements = [];
+    for (let tIdx = 0; tIdx < line.tokens.length; tIdx++) {
+      const token = line.tokens[tIdx];
+      const len = token.text.length;
+
+      if (remaining <= 0) {
+        if (!cursorPlaced) {
+          tokenElements.push(
+            <span
+              key="cursor"
+              className="inline-block w-[2px] h-[1.15em] bg-[#FF4D79] ml-[1px] align-middle animate-pulse shadow-[0_0_8px_#FF4D79]"
+            />
+          );
+          cursorPlaced = true;
+        }
+        break;
+      }
+
+      if (remaining >= len) {
+        tokenElements.push(
+          <span key={tIdx} className={token.color}>
+            {token.text}
+          </span>
+        );
+        remaining -= len;
+      } else {
+        const slice = token.text.slice(0, remaining);
+        tokenElements.push(
+          <span key={tIdx} className={token.color}>
+            {slice}
+          </span>
+        );
+        tokenElements.push(
+          <span
+            key="cursor"
+            className="inline-block w-[2px] h-[1.15em] bg-[#FF4D79] ml-[1px] align-middle animate-pulse shadow-[0_0_8px_#FF4D79]"
+          />
+        );
+        cursorPlaced = true;
+        remaining = 0;
+        break;
+      }
+    }
+
+    if (remaining === 0 && !cursorPlaced && tokenElements.length > 0) {
+      tokenElements.push(
+        <span
+          key="cursor"
+          className="inline-block w-[2px] h-[1.15em] bg-[#FF4D79] ml-[1px] align-middle animate-pulse shadow-[0_0_8px_#FF4D79]"
+        />
+      );
+      cursorPlaced = true;
+    }
+
+    if (tokenElements.length === 0 && cursorPlaced) {
+      return null;
+    }
+
+    return (
+      <div key={lineIdx} className={line.indent}>
+        {tokenElements}
+      </div>
+    );
+  });
 
   return (
     <section className="w-full relative overflow-hidden bg-gradient-to-b from-white via-surface-dim to-white border-b border-border-subtle">
@@ -531,7 +805,9 @@ export default function ServicesHero() {
 
                 {/* Terminal Code Body */}
                 <div className="p-5 sm:p-6 xl:p-7 text-[13px] sm:text-[14px] leading-relaxed overflow-x-auto select-text text-slate-300 min-h-[310px]">
-                  {activeSnippet.render()}
+                  <div className="space-y-1 font-mono text-xs sm:text-[13px]">
+                    {renderedLines}
+                  </div>
                 </div>
 
                 {/* Status Bar */}
