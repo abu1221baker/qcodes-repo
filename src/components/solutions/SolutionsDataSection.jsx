@@ -126,84 +126,91 @@ export default function SolutionsDataSection() {
 
         </div>
 
-        {/* BOTTOM ROW: Full-Width Cost-Efficiency & Resource Allocation Spectrum Diagram */}
-        <div className="bg-white p-6 sm:p-8 rounded-3xl border border-border-subtle shadow-[0_6px_30px_rgba(0,0,0,0.03)] flex flex-col gap-6 relative overflow-hidden">
-          
-          {/* Diagram Header */}
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
-                <span className="material-symbols-outlined text-[22px]">bar_chart</span>
-              </div>
-              <div className="flex flex-col">
-                <h3 className="font-headline text-base sm:text-lg font-bold text-[#11141A]">
-                  Cost-Efficiency &amp; Resource Allocation Spectrum
-                </h3>
-                <span className="font-sans text-xs text-text-muted">
-                  Dynamic resource optimization across pre-built packages, agile squads, and dedicated IT teams
-                </span>
-              </div>
-            </div>
+        {/* BOTTOM ROW: Full-Width Cost-Efficiency & Resource Allocation Spectrum Diagram with Thick Pink Gradient Frame */}
+        <div className="relative w-full rounded-[2.25rem] sm:rounded-[3rem] lg:rounded-[3.25rem] p-3.5 sm:p-5 lg:p-6 bg-gradient-to-br from-[#FF3366] via-[#E21E4C] to-[#A91639] shadow-2xl shadow-red-900/25 overflow-hidden">
+          {/* Ambient glow inside pink border */}
+          <div className="absolute top-0 right-0 w-80 h-80 bg-white/20 blur-3xl pointer-events-none rounded-full" />
+          <div className="absolute bottom-0 left-0 w-72 h-72 bg-black/10 blur-2xl pointer-events-none rounded-full" />
 
-            {/* Active Telemetry Status Indicator */}
-            <div className="flex items-center gap-2 px-3.5 py-1.5 bg-[#FFF0F2] border border-primary/20 rounded-xl font-sans text-xs text-primary font-bold">
-              <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-              <span>{activeMetric.name}: {activeMetric.efficiency}</span>
-            </div>
-          </div>
-
-          {/* Dynamic Interactive Wave Spectrum Bars */}
-          <div
-            ref={barsContainerRef}
-            className="w-full h-44 sm:h-52 bg-gradient-to-b from-[#F9FAFC] to-[#F1F3F7] border border-border-subtle rounded-2xl flex items-end justify-between px-3 sm:px-6 py-4 gap-1.5 sm:gap-2 overflow-hidden shadow-inner relative"
-          >
-            {/* Guide Lines */}
-            <div className="absolute inset-x-0 top-1/4 border-b border-dashed border-gray-300 pointer-events-none opacity-40"></div>
-            <div className="absolute inset-x-0 top-2/4 border-b border-dashed border-gray-300 pointer-events-none opacity-40"></div>
-            <div className="absolute inset-x-0 top-3/4 border-b border-dashed border-gray-300 pointer-events-none opacity-40"></div>
-
-            {initialBars.map((bar, idx) => (
-              <div
-                key={idx}
-                ref={(el) => (barElementsRef.current[idx] = el)}
-                onMouseEnter={() =>
-                  setActiveMetric({
-                    name: bar.label,
-                    efficiency: `${(bar.baseH + (Math.random() * 6 - 3)).toFixed(1)}%`,
-                    status: 'OPTIMAL',
-                  })
-                }
-                className="w-full rounded-t-md transition-colors duration-200 cursor-pointer relative group origin-bottom"
-                style={{
-                  height: `${bar.baseH}%`,
-                  backgroundColor: bar.color,
-                  boxShadow: bar.color === '#E21E4C' || bar.color === '#A91639' ? '0 0 10px rgba(226,30,76,0.3)' : 'none',
-                }}
-              >
-                {/* Tooltip on Hover */}
-                <div className="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-[#11141A] text-white text-[11px] font-sans px-2.5 py-1 rounded-lg shadow-md pointer-events-none whitespace-nowrap z-20">
-                  {bar.label}
+          {/* Inner White Card */}
+          <div className="relative w-full rounded-2xl sm:rounded-[2rem] lg:rounded-[2.25rem] bg-white overflow-hidden p-6 sm:p-8 flex flex-col gap-6 shadow-lg">
+            
+            {/* Diagram Header */}
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                  <span className="material-symbols-outlined text-[22px]">bar_chart</span>
+                </div>
+                <div className="flex flex-col">
+                  <h3 className="font-headline text-base sm:text-lg font-bold text-[#11141A]">
+                    Cost-Efficiency &amp; Resource Allocation Spectrum
+                  </h3>
+                  <span className="font-sans text-xs text-text-muted">
+                    Dynamic resource optimization across pre-built packages, agile squads, and dedicated IT teams
+                  </span>
                 </div>
               </div>
-            ))}
-          </div>
 
-          {/* Bottom Spectrum Telemetry Summary */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 text-text-muted font-sans text-xs border-t border-border-subtle">
-            <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-primary shrink-0"></span>
-              <span><strong>Zero Overhead:</strong> Eliminates hiring, onboarding &amp; payroll burden</span>
+              {/* Active Telemetry Status Indicator */}
+              <div className="flex items-center gap-2 px-3.5 py-1.5 bg-[#FFF0F2] border border-primary/20 rounded-xl font-sans text-xs text-primary font-bold">
+                <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                <span>{activeMetric.name}: {activeMetric.efficiency}</span>
+              </div>
             </div>
-            <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-primary-dark shrink-0"></span>
-              <span><strong>Pre-Built Modules:</strong> Rapid deployment without custom dev delays</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#11141A] shrink-0"></span>
-              <span><strong>Dedicated Team:</strong> High-skilled cross-functional engineering pool</span>
-            </div>
-          </div>
 
+            {/* Dynamic Interactive Wave Spectrum Bars */}
+            <div
+              ref={barsContainerRef}
+              className="w-full h-44 sm:h-52 bg-gradient-to-b from-[#F9FAFC] to-[#F1F3F7] border border-border-subtle rounded-2xl flex items-end justify-between px-3 sm:px-6 py-4 gap-1.5 sm:gap-2 overflow-hidden shadow-inner relative"
+            >
+              {/* Guide Lines */}
+              <div className="absolute inset-x-0 top-1/4 border-b border-dashed border-gray-300 pointer-events-none opacity-40"></div>
+              <div className="absolute inset-x-0 top-2/4 border-b border-dashed border-gray-300 pointer-events-none opacity-40"></div>
+              <div className="absolute inset-x-0 top-3/4 border-b border-dashed border-gray-300 pointer-events-none opacity-40"></div>
+
+              {initialBars.map((bar, idx) => (
+                <div
+                  key={idx}
+                  ref={(el) => (barElementsRef.current[idx] = el)}
+                  onMouseEnter={() =>
+                    setActiveMetric({
+                      name: bar.label,
+                      efficiency: `${(bar.baseH + (Math.random() * 6 - 3)).toFixed(1)}%`,
+                      status: 'OPTIMAL',
+                    })
+                  }
+                  className="w-full rounded-t-md transition-colors duration-200 cursor-pointer relative group origin-bottom"
+                  style={{
+                    height: `${bar.baseH}%`,
+                    backgroundColor: bar.color,
+                    boxShadow: bar.color === '#E21E4C' || bar.color === '#A91639' ? '0 0 10px rgba(226,30,76,0.3)' : 'none',
+                  }}
+                >
+                  {/* Tooltip on Hover */}
+                  <div className="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-[#11141A] text-white text-[11px] font-sans px-2.5 py-1 rounded-lg shadow-md pointer-events-none whitespace-nowrap z-20">
+                    {bar.label}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Bottom Spectrum Telemetry Summary */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 text-text-muted font-sans text-xs border-t border-border-subtle">
+              <div className="flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-primary shrink-0"></span>
+                <span><strong>Zero Overhead:</strong> Eliminates hiring, onboarding &amp; payroll burden</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-primary-dark shrink-0"></span>
+                <span><strong>Pre-Built Modules:</strong> Rapid deployment without custom dev delays</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#11141A] shrink-0"></span>
+                <span><strong>Dedicated Team:</strong> High-skilled cross-functional engineering pool</span>
+              </div>
+            </div>
+
+          </div>
         </div>
 
       </div>

@@ -3,7 +3,7 @@ import { AboutUsSvg } from '../../assets';
 
 export default function AboutBanner() {
   return (
-    <section className="relative w-full px-4 sm:px-8 py-16 sm:py-24 bg-gradient-to-b from-[#F8F9FA] via-white to-[#F8F9FA] border-b border-border-subtle overflow-hidden">
+    <section className="relative w-full px-4 sm:px-8 py-16 sm:py-24 bg-gradient-to-b from-[#F8F9FA] via-white to-[#F8F9FA] overflow-hidden">
       {/* Ambient background glow */}
       <div className="absolute top-1/4 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-gradient-to-tr from-red-100/50 via-pink-50/40 to-transparent blur-[130px] pointer-events-none rounded-full" />
 
@@ -49,26 +49,34 @@ export default function AboutBanner() {
           </div>
         </div>
 
-        {/* Right Column: Hero Visual Artwork */}
+        {/* Right Column: Hero Visual Artwork with Thick Pink Gradient Frame */}
         <div className="lg:col-span-5 flex items-center justify-center">
-          <div className="relative w-full max-w-lg p-5 sm:p-8 rounded-3xl bg-white border border-border-subtle shadow-xl hover:shadow-2xl transition-all duration-300 group">
-            <div className="absolute top-0 right-0 w-48 h-48 bg-red-100/50 blur-3xl rounded-full pointer-events-none" />
-            <div className="relative w-full flex items-center justify-center overflow-hidden">
-              <img
-                src={AboutUsSvg}
-                alt="About Qcodes Infotech - Leading the Digital Revolution"
-                className="w-full h-auto max-h-[380px] object-contain transition-transform duration-500 drop-shadow-md"
-              />
-            </div>
-            <div className="mt-4 pt-4 border-t border-border-subtle flex items-center justify-between text-xs font-mono text-text-muted">
-              <span className="text-primary font-bold">INNOVATIVE SOLUTIONS</span>
-              <span className="flex items-center gap-1 text-[#28CD41] font-semibold">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#28CD41] animate-ping" />
-                ACTIVE ENGINE
-              </span>
+          <div className="relative w-full max-w-lg rounded-[2.25rem] sm:rounded-[3rem] p-3.5 sm:p-5 lg:p-6 bg-gradient-to-br from-[#FF3366] via-[#E21E4C] to-[#A91639] shadow-2xl shadow-red-900/25 overflow-hidden">
+            {/* Ambient glow inside pink border */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-white/20 blur-2xl pointer-events-none rounded-full" />
+            <div className="absolute bottom-0 left-0 w-56 h-56 bg-black/10 blur-xl pointer-events-none rounded-full" />
+
+            {/* Inner White Card */}
+            <div className="relative w-full rounded-2xl sm:rounded-[2rem] bg-white overflow-hidden p-5 sm:p-7 shadow-lg">
+              <div className="relative w-full flex items-center justify-center overflow-hidden">
+                <img
+                  src={AboutUsSvg}
+                  alt="About Qcodes Infotech - Leading the Digital Revolution"
+                  className="w-full h-auto max-h-[380px] object-contain transition-transform duration-500 drop-shadow-md"
+                  loading="eager"
+                />
+              </div>
+              <div className="mt-4 pt-4 border-t border-border-subtle flex items-center justify-between text-xs font-mono text-text-muted">
+                <span className="text-primary font-bold">INNOVATIVE SOLUTIONS</span>
+                <span className="flex items-center gap-1 text-[#28CD41] font-semibold">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#28CD41] animate-ping" />
+                  ACTIVE ENGINE
+                </span>
+              </div>
             </div>
           </div>
         </div>
+
       </div>
     </section>
   );

@@ -107,6 +107,11 @@ export default function FanCardDeck() {
         
         {/* Section Heading */}
         <div className="flex flex-col items-center text-center gap-3 max-w-3xl mx-auto">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-red-50 border border-red-200 text-primary text-xs font-semibold uppercase tracking-wider">
+            <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+            <span>Precision Engineering Arsenal</span>
+          </div>
+
           <h2 className="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold text-text-main tracking-tight">
             Our Services
           </h2>

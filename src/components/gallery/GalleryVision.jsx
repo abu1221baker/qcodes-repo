@@ -4,17 +4,23 @@ import { OurVisionSvg } from '../../assets';
 export default function GalleryVision() {
   return (
     <section className="relative px-4 sm:px-8 xl:px-12 pb-16 max-w-[1720px] mx-auto w-full">
-      <div className="bg-gradient-to-tr from-white via-[#FFF8F9] to-red-50/40 rounded-3xl p-8 sm:p-12 lg:p-16 border border-[#e8ecf2] shadow-[0_12px_40px_rgba(226,30,76,0.06)] relative overflow-hidden">
-        {/* Ambient Accent Glow */}
-        <div className="absolute -top-24 -right-24 w-96 h-96 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
-        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-red-100/30 rounded-full blur-3xl pointer-events-none"></div>
+      {/* Thick Pink Gradient Outer Border Frame */}
+      <div className="relative w-full rounded-[2.25rem] sm:rounded-[3rem] lg:rounded-[3.25rem] p-4 sm:p-6 lg:p-7 xl:p-8 bg-gradient-to-br from-[#FF3366] via-[#E21E4C] to-[#A91639] shadow-2xl shadow-red-900/25 overflow-hidden">
+        {/* Subtle ambient light gradient inside pink backdrop */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-white/20 blur-3xl pointer-events-none rounded-full" />
+        <div className="absolute bottom-0 left-0 w-80 h-80 bg-black/10 blur-2xl pointer-events-none rounded-full" />
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center relative z-10">
+        {/* Inner White Card Container */}
+        <div className="relative w-full rounded-2xl sm:rounded-[2rem] lg:rounded-[2.25rem] bg-white overflow-hidden p-6 sm:p-10 lg:p-14 shadow-lg grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
           
           {/* Left Column: Vision Statement */}
-          <div className="lg:col-span-7 flex flex-col items-start gap-5">
-            <h2 className="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#1C1C1C] tracking-tight leading-tight">
-              Our <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-dark">Vision</span>
+          <div className="lg:col-span-7 flex flex-col items-start gap-5 relative z-10">
+            <div className="w-14 h-14 rounded-2xl bg-primary-light border border-primary/20 flex items-center justify-center text-primary shadow-sm">
+              <span className="material-symbols-outlined text-[32px]">visibility</span>
+            </div>
+
+            <h2 className="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#11141A] tracking-tight leading-tight">
+              Our <span className="text-primary">Vision</span>
             </h2>
 
             <div className="flex flex-col gap-4 text-text-muted font-sans text-base sm:text-lg leading-relaxed max-w-3xl">
@@ -25,15 +31,22 @@ export default function GalleryVision() {
                 We believe technology can transform how we live and work, and we are dedicated to using our expertise to help businesses harness its benefits. Our vision is to be at the forefront of technological advancements, always offering cutting-edge solutions that meet the evolving needs of our clients.
               </p>
             </div>
+
+            <div className="pt-2 font-mono text-xs text-text-muted flex items-center gap-4">
+              <span>GLOBAL INNOVATION LEADER</span>
+              <span>•</span>
+              <span>PURPOSE-DRIVEN TECHNOLOGY</span>
+            </div>
           </div>
 
           {/* Right Column: our_vission.svg Illustration */}
-          <div className="lg:col-span-5 flex items-center justify-center">
-            <div className="relative w-full max-w-[460px] p-6 sm:p-8 rounded-3xl bg-white border border-[#e8ecf2] shadow-[0_8px_30px_rgba(0,0,0,0.04)] group hover:shadow-[0_16px_40px_rgba(226,30,76,0.1)] transition-all duration-500 flex items-center justify-center">
+          <div className="lg:col-span-5 flex items-center justify-center relative z-10">
+            <div className="relative w-full max-w-[460px] p-6 sm:p-8 rounded-3xl bg-surface-dim border border-border-subtle shadow-md group hover:shadow-xl hover:border-primary/30 transition-all duration-500 flex items-center justify-center">
+              <div className="absolute inset-0 bg-radial from-primary/10 via-transparent to-transparent opacity-60 pointer-events-none rounded-3xl" />
               <img
                 src={OurVisionSvg}
                 alt="Qcodes Infotech Vision Illustration"
-                className="w-full h-auto max-h-[320px] object-contain group-hover:scale-105 transition-transform duration-500 drop-shadow-md"
+                className="relative z-10 w-full h-auto max-h-[320px] object-contain group-hover:scale-105 transition-transform duration-500 drop-shadow-md"
                 loading="lazy"
               />
               

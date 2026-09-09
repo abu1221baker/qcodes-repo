@@ -205,7 +205,7 @@ export default function FoundationsCarousel() {
 
   return (
     <section
-      className="relative w-full py-20 px-4 sm:px-8 bg-gradient-to-b from-[#F8F9FA] via-white to-[#F8F9FA] border-t border-b border-border-subtle overflow-hidden select-none"
+      className="relative w-full py-20 px-4 sm:px-8 bg-gradient-to-b from-[#F8F9FA] via-white to-[#F8F9FA] overflow-hidden select-none"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >

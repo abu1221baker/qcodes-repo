@@ -51,21 +51,30 @@ export default function GalleryHero() {
           </div>
         </div>
 
-        {/* Right Column: Animated work-galary.svg Illustration */}
+        {/* Right Column: Animated work-galary.svg Illustration with Thick Pink Gradient Frame */}
         <div className="lg:col-span-5 flex items-center justify-center relative">
-          <div className="relative w-full max-w-[480px] p-4 sm:p-6 rounded-3xl bg-gradient-to-tr from-[#FFF0F2] via-white to-red-50/40 border border-primary/15 shadow-[0_12px_40px_rgba(226,30,76,0.08)] group hover:shadow-[0_20px_50px_rgba(226,30,76,0.14)] transition-all duration-500 flex items-center justify-center overflow-hidden">
-            <div className="absolute top-0 right-0 w-40 h-40 bg-primary/10 blur-2xl rounded-full pointer-events-none" />
-            <img
-              src={WorkGallerySvg}
-              alt="Qcodes Infotech Work Gallery"
-              className="relative z-10 w-full h-auto max-h-[360px] object-contain group-hover:scale-105 transition-transform duration-500 drop-shadow-md"
-              loading="eager"
-            />
-            
-            {/* Subtle Interactive Holographic Overlay Tag */}
-            <div className="absolute -bottom-3 -right-2 sm:right-4 px-3.5 py-1.5 rounded-xl bg-white/95 backdrop-blur-md border border-border-subtle shadow-lg flex items-center gap-2 font-mono text-xs text-text-main font-bold z-20">
-              <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-              <span>SYSTEMS PORTFOLIO</span>
+          <div className="relative w-full max-w-lg rounded-[2.25rem] sm:rounded-[3rem] p-3.5 sm:p-5 lg:p-6 bg-gradient-to-br from-[#FF3366] via-[#E21E4C] to-[#A91639] shadow-2xl shadow-red-900/25 overflow-hidden">
+            {/* Ambient glow inside pink border */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-white/20 blur-2xl pointer-events-none rounded-full" />
+            <div className="absolute bottom-0 left-0 w-56 h-56 bg-black/10 blur-xl pointer-events-none rounded-full" />
+
+            {/* Inner White Card */}
+            <div className="relative w-full rounded-2xl sm:rounded-[2rem] bg-white overflow-hidden p-6 sm:p-8 shadow-lg flex flex-col items-center justify-center">
+              <img
+                src={WorkGallerySvg}
+                alt="Qcodes Infotech Work Gallery"
+                className="w-full h-auto max-h-[340px] object-contain group-hover:scale-105 transition-transform duration-500 drop-shadow-md"
+                loading="eager"
+              />
+              
+              {/* Overlay Tag */}
+              <div className="mt-4 pt-3.5 w-full border-t border-border-subtle flex items-center justify-between text-xs font-mono text-text-muted">
+                <span className="text-primary font-bold">SYSTEMS PORTFOLIO</span>
+                <span className="flex items-center gap-1.5 text-[#28CD41] font-semibold">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#28CD41] animate-ping" />
+                  FEATURED WORK
+                </span>
+              </div>
             </div>
           </div>
         </div>

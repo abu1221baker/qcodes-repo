@@ -3,7 +3,7 @@ import { OurVisionSvg, ConnectedWorldSvg } from '../../assets';
 
 export default function AboutMissionVision() {
   return (
-    <section className="relative w-full py-20 px-4 sm:px-8 bg-[#F8F9FA] border-b border-border-subtle overflow-hidden">
+    <section className="relative w-full py-20 px-4 sm:px-8 bg-[#F8F9FA] overflow-hidden">
       {/* Subtle ambient lighting */}
       <div className="absolute top-1/3 right-1/4 w-[600px] h-[500px] bg-gradient-to-bl from-pink-100/40 via-red-50/30 to-transparent blur-[140px] pointer-events-none rounded-full" />
       <div className="absolute bottom-10 left-10 w-96 h-96 bg-amber-50/50 blur-[130px] pointer-events-none rounded-full" />

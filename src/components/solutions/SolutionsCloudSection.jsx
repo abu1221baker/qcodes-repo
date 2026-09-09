@@ -489,71 +489,78 @@ export default function SolutionsCloudSection() {
       id="section-cloud"
     >
       <div className="max-w-6xl mx-auto flex flex-col gap-12">
-        {/* Section Header with Expanded Text & SVG Illustration on Right */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center bg-white p-6 sm:p-10 rounded-2xl border border-border-subtle shadow-[0_6px_30px_rgba(0,0,0,0.03)]">
-          {/* Left Column: Expanded Technical Narrative & Tenets */}
-          <div className="lg:col-span-7 flex flex-col items-start gap-4">
-            <h2 className="font-headline text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1C1C1C] tracking-tight leading-tight">
-              Project Execution &amp; Delivery
-            </h2>
+        {/* Section Header with Expanded Text & SVG Illustration on Right with Thick Pink Gradient Frame */}
+        <div className="relative w-full rounded-[2.25rem] sm:rounded-[3rem] lg:rounded-[3.25rem] p-3.5 sm:p-5 lg:p-6 bg-gradient-to-br from-[#FF3366] via-[#E21E4C] to-[#A91639] shadow-2xl shadow-red-900/25 overflow-hidden">
+          {/* Ambient glow inside pink border */}
+          <div className="absolute top-0 right-0 w-80 h-80 bg-white/20 blur-3xl pointer-events-none rounded-full" />
+          <div className="absolute bottom-0 left-0 w-72 h-72 bg-black/10 blur-2xl pointer-events-none rounded-full" />
 
-            <p className="font-sans text-sm sm:text-base text-text-muted leading-relaxed">
-              From initial scoping to full production launch, our delivery process follows 12 structured milestones to ensure quality, transparency, and timely delivery.
-            </p>
+          {/* Inner White Container */}
+          <div className="relative w-full rounded-2xl sm:rounded-[2rem] lg:rounded-[2.25rem] bg-white overflow-hidden p-6 sm:p-10 shadow-lg grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            {/* Left Column: Expanded Technical Narrative & Tenets */}
+            <div className="lg:col-span-7 flex flex-col items-start gap-4">
+              <h2 className="font-headline text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1C1C1C] tracking-tight leading-tight">
+                Project Execution &amp; Delivery
+              </h2>
 
-            {/* Quick Framework Pillars Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full pt-1">
-              <div className="bg-[#F8F9FB] border border-border-subtle rounded-xl p-3 flex flex-col gap-1">
-                <div className="flex items-center gap-1.5 text-primary">
-                  <span className="material-symbols-outlined text-[18px]">verified</span>
-                  <span className="font-mono text-[11px] font-bold">CLEAR SCOPING</span>
+              <p className="font-sans text-sm sm:text-base text-text-muted leading-relaxed">
+                From initial scoping to full production launch, our delivery process follows 12 structured milestones to ensure quality, transparency, and timely delivery.
+              </p>
+
+              {/* Quick Framework Pillars Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full pt-1">
+                <div className="bg-[#F8F9FB] border border-border-subtle rounded-xl p-3 flex flex-col gap-1">
+                  <div className="flex items-center gap-1.5 text-primary">
+                    <span className="material-symbols-outlined text-[18px]">verified</span>
+                    <span className="font-mono text-[11px] font-bold">CLEAR SCOPING</span>
+                  </div>
+                  <span className="text-xs text-text-muted">Dedicated project lead and centralized planning.</span>
                 </div>
-                <span className="text-xs text-text-muted">Dedicated project lead and centralized planning.</span>
+
+                <div className="bg-[#F8F9FB] border border-border-subtle rounded-xl p-3 flex flex-col gap-1">
+                  <div className="flex items-center gap-1.5 text-primary">
+                    <span className="material-symbols-outlined text-[18px]">insights</span>
+                    <span className="font-mono text-[11px] font-bold">REAL-TIME TRACKING</span>
+                  </div>
+                  <span className="text-xs text-text-muted">Scheduled sprint reviews and progress updates.</span>
+                </div>
+
+                <div className="bg-[#F8F9FB] border border-border-subtle rounded-xl p-3 flex flex-col gap-1">
+                  <div className="flex items-center gap-1.5 text-primary">
+                    <span className="material-symbols-outlined text-[18px]">security</span>
+                    <span className="font-mono text-[11px] font-bold">SECURITY &amp; QUALITY</span>
+                  </div>
+                  <span className="text-xs text-text-muted">High security standards and complete confidentiality.</span>
+                </div>
               </div>
 
-              <div className="bg-[#F8F9FB] border border-border-subtle rounded-xl p-3 flex flex-col gap-1">
-                <div className="flex items-center gap-1.5 text-primary">
-                  <span className="material-symbols-outlined text-[18px]">insights</span>
-                  <span className="font-mono text-[11px] font-bold">REAL-TIME TRACKING</span>
-                </div>
-                <span className="text-xs text-text-muted">Scheduled sprint reviews and progress updates.</span>
-              </div>
-
-              <div className="bg-[#F8F9FB] border border-border-subtle rounded-xl p-3 flex flex-col gap-1">
-                <div className="flex items-center gap-1.5 text-primary">
-                  <span className="material-symbols-outlined text-[18px]">security</span>
-                  <span className="font-mono text-[11px] font-bold">SECURITY &amp; QUALITY</span>
-                </div>
-                <span className="text-xs text-text-muted">High security standards and complete confidentiality.</span>
+              <div className="pt-2 flex items-center gap-2 text-primary font-mono text-xs font-bold">
+                <span className="material-symbols-outlined text-[18px] animate-bounce">arrow_downward</span>
+                <span>Scroll down to follow each project milestone step-by-step.</span>
               </div>
             </div>
 
-            <div className="pt-2 flex items-center gap-2 text-primary font-mono text-xs font-bold">
-              <span className="material-symbols-outlined text-[18px] animate-bounce">arrow_downward</span>
-              <span>Scroll down to follow each project milestone step-by-step.</span>
-            </div>
-          </div>
+            {/* Right Column: SVG Illustration Card with Live Telemetry Badges */}
+            <div className="lg:col-span-5 flex items-center justify-center relative">
+              <div className="relative w-full max-w-[380px] bg-gradient-to-br from-[#FFF0F2] via-white to-surface-dim p-6 rounded-2xl border border-primary/20 shadow-sm flex flex-col items-center justify-center overflow-hidden group">
+                {/* Background Accent Glow */}
+                <div className="absolute -top-12 -right-12 w-44 h-44 bg-primary/10 rounded-full blur-2xl pointer-events-none"></div>
 
-          {/* Right Column: SVG Illustration Card with Live Telemetry Badges */}
-          <div className="lg:col-span-5 flex items-center justify-center relative">
-            <div className="relative w-full max-w-[380px] bg-gradient-to-br from-[#FFF0F2] via-white to-surface-dim p-6 rounded-2xl border border-primary/20 shadow-sm flex flex-col items-center justify-center overflow-hidden group">
-              {/* Background Accent Glow */}
-              <div className="absolute -top-12 -right-12 w-44 h-44 bg-primary/10 rounded-full blur-2xl pointer-events-none"></div>
+                {/* Connected World SVG Image */}
+                <img
+                  src={ConnectedWorldSvg}
+                  alt="Qcodes Project Execution & Connected Global Delivery"
+                  className="w-full h-auto max-h-[230px] object-contain group-hover:scale-105 transition-transform duration-500 relative z-10"
+                />
 
-              {/* Connected World SVG Image */}
-              <img
-                src={ConnectedWorldSvg}
-                alt="Qcodes Project Execution & Connected Global Delivery"
-                className="w-full h-auto max-h-[230px] object-contain group-hover:scale-105 transition-transform duration-500 relative z-10"
-              />
-
-              {/* Floating SLA Badge */}
-              <div className="mt-4 w-full flex items-center justify-between gap-2 px-3 py-2 bg-white/90 backdrop-blur-sm border border-border-subtle rounded-xl shadow-xs relative z-10">
-                <div className="flex items-center gap-2">
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#0ae448] shadow-[0_0_8px_#0ae448]"></span>
-                  <span className="font-mono text-[11px] text-text-main font-bold">MISSION SLA: 99.8%</span>
+                {/* Floating SLA Badge */}
+                <div className="mt-4 w-full flex items-center justify-between gap-2 px-3 py-2 bg-white/90 backdrop-blur-sm border border-border-subtle rounded-xl shadow-xs relative z-10">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#0ae448] shadow-[0_0_8px_#0ae448]"></span>
+                    <span className="font-mono text-[11px] text-text-main font-bold">MISSION SLA: 99.8%</span>
+                  </div>
+                  <span className="font-mono text-[11px] text-primary font-extrabold">12 MILESTONES</span>
                 </div>
-                <span className="font-mono text-[11px] text-primary font-extrabold">12 MILESTONES</span>
               </div>
             </div>
           </div>
@@ -822,78 +829,79 @@ export default function SolutionsCloudSection() {
                     style={{ backgroundColor: index === 0 ? '#E21E4C' : '#E5E7EB' }}
                   ></div>
 
-                  {/* Step Card */}
+                  {/* Step Card with Thick Pink Gradient Frame */}
                   <div
                     ref={isLast ? landingCardRef : undefined}
-                    className={`timeline-step-card w-full lg:w-[46%] pl-12 sm:pl-14 lg:pl-8 p-6 sm:p-7 rounded-2xl border bg-white transition-all duration-300 flex flex-col gap-4 group cursor-pointer relative ${
-                      isLast
-                        ? 'border-primary/40 shadow-lg shadow-red-500/10'
-                        : 'border-border-subtle shadow-sm hover:shadow-xl hover:border-primary/30 hover:-translate-y-1'
+                    className={`timeline-step-card w-full lg:w-[46%] rounded-[1.75rem] sm:rounded-[2.25rem] p-1.5 sm:p-2 bg-gradient-to-br from-[#FF3366] via-[#E21E4C] to-[#A91639] shadow-xl shadow-red-900/20 transition-all duration-300 group cursor-pointer relative overflow-hidden ${
+                      isLast ? 'shadow-red-500/30' : ''
                     }`}
                   >
-                    {/* Card Header: Prominent Enlarged Dark Pink Number Circle + Category Badge + Icon */}
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3.5">
-                        <span
-                          ref={isLast ? landingCircleRef : undefined}
-                          className="w-14 h-14 sm:w-16 sm:h-16 rounded-full text-white flex items-center justify-center font-mono text-xl sm:text-2xl font-black tracking-tight shadow-lg shadow-red-500/30 border-2 border-white/30 group-hover:scale-110 transition-all shrink-0 bg-gradient-to-br from-primary via-primary-dark to-[#A91639]"
-                        >
-                          {step.num}
-                        </span>
-                        <span
-                          ref={isLast ? landingBadgeRef : undefined}
-                          className="font-mono text-xs font-bold tracking-wider px-3.5 py-1.5 rounded-full border bg-primary/10 text-primary border-primary/20"
-                        >
-                          {step.category}
-                        </span>
+                    {/* Inner White Card */}
+                    <div className="w-full h-full rounded-[1.4rem] sm:rounded-[1.9rem] bg-white pl-12 sm:pl-14 lg:pl-8 p-6 sm:p-7 flex flex-col gap-4 relative overflow-hidden shadow-inner">
+                      {/* Card Header: Prominent Enlarged Dark Pink Number Circle + Category Badge + Icon */}
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3.5">
+                          <span
+                            ref={isLast ? landingCircleRef : undefined}
+                            className="w-14 h-14 sm:w-16 sm:h-16 rounded-full text-white flex items-center justify-center font-mono text-xl sm:text-2xl font-black tracking-tight shadow-lg shadow-red-500/30 border-2 border-white/30 group-hover:scale-110 transition-all shrink-0 bg-gradient-to-br from-primary via-primary-dark to-[#A91639]"
+                          >
+                            {step.num}
+                          </span>
+                          <span
+                            ref={isLast ? landingBadgeRef : undefined}
+                            className="font-mono text-xs font-bold tracking-wider px-3.5 py-1.5 rounded-full border bg-primary/10 text-primary border-primary/20"
+                          >
+                            {step.category}
+                          </span>
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                          <span className="font-mono text-[11px] text-text-muted hidden sm:inline">
+                            {step.milestone}
+                          </span>
+                          <span
+                            ref={isLast ? landingIconRef : undefined}
+                            className="material-symbols-outlined text-[24px] text-primary group-hover:scale-110 transition-transform"
+                          >
+                            {step.icon}
+                          </span>
+                        </div>
                       </div>
 
-                      <div className="flex items-center gap-2">
-                        <span className="font-mono text-[11px] text-text-muted hidden sm:inline">
-                          {step.milestone}
-                        </span>
-                        <span
-                          ref={isLast ? landingIconRef : undefined}
-                          className="material-symbols-outlined text-[24px] text-primary group-hover:scale-110 transition-transform"
+                      {/* Step Title & Description */}
+                      <div>
+                        <h4 className="font-headline text-lg sm:text-xl font-extrabold text-[#11141A] group-hover:text-primary transition-colors leading-snug">
+                          {step.title}
+                        </h4>
+                        <p className="font-sans text-sm text-text-muted leading-relaxed mt-2">
+                          {step.desc}
+                        </p>
+                      </div>
+
+                      {/* Special Landing Base Status for Card 12 — always rendered, toggled via ref */}
+                      {isLast && (
+                        <div
+                          ref={landingIndicatorRef}
+                          className="flex items-center gap-2 py-2 px-3 bg-[#EBFDF0] border border-[#0ae448]/30 rounded-xl transition-opacity duration-300"
+                          style={{ opacity: 0, visibility: 'hidden' }}
                         >
-                          {step.icon}
+                          <span className="w-2.5 h-2.5 rounded-full bg-[#0ae448] animate-ping"></span>
+                          <span className="font-mono text-xs font-bold text-[#05ba39]">
+                            MISSION SUCCESSFUL // SAFE TOUCHDOWN AT COMMAND BASE
+                          </span>
+                        </div>
+                      )}
+
+                      {/* Footer Milestone Pill */}
+                      <div className="mt-auto pt-3.5 border-t border-border-subtle flex items-center justify-between font-mono text-xs">
+                        <span className="text-text-muted font-medium">CORE VALUE</span>
+                        <span
+                          ref={isLast ? landingFooterRef : undefined}
+                          className="text-primary font-bold"
+                        >
+                          {step.highlight}
                         </span>
                       </div>
-                    </div>
-
-                    {/* Step Title & Description */}
-                    <div>
-                      <h4 className="font-headline text-lg sm:text-xl font-extrabold text-[#11141A] group-hover:text-primary transition-colors leading-snug">
-                        {step.title}
-                      </h4>
-                      <p className="font-sans text-sm text-text-muted leading-relaxed mt-2">
-                        {step.desc}
-                      </p>
-                    </div>
-
-                    {/* Special Landing Base Status for Card 12 — always rendered, toggled via ref */}
-                    {isLast && (
-                      <div
-                        ref={landingIndicatorRef}
-                        className="flex items-center gap-2 py-2 px-3 bg-[#EBFDF0] border border-[#0ae448]/30 rounded-xl transition-opacity duration-300"
-                        style={{ opacity: 0, visibility: 'hidden' }}
-                      >
-                        <span className="w-2.5 h-2.5 rounded-full bg-[#0ae448] animate-ping"></span>
-                        <span className="font-mono text-xs font-bold text-[#05ba39]">
-                          MISSION SUCCESSFUL // SAFE TOUCHDOWN AT COMMAND BASE
-                        </span>
-                      </div>
-                    )}
-
-                    {/* Footer Milestone Pill */}
-                    <div className="mt-auto pt-3.5 border-t border-border-subtle flex items-center justify-between font-mono text-xs">
-                      <span className="text-text-muted font-medium">CORE VALUE</span>
-                      <span
-                        ref={isLast ? landingFooterRef : undefined}
-                        className="text-primary font-bold"
-                      >
-                        {step.highlight}
-                      </span>
                     </div>
                   </div>
                 </div>
